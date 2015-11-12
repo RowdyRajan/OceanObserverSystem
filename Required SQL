@@ -1,0 +1,49 @@
+//SENSOR AND USER MANAGEMENT MODULE///
+
+//Retrieve Sensors:
+SELECT * 
+FROM sensors;
+
+//Add Sensor:
+INSERT INTO sensors (location, sensor_type, description)
+VALUES (\''.$location.'\', \''.$sensor_type.'\', \''.$description.'\');
+
+//Update Sensor:
+UPDATE sensors
+SET location = \''.$location.'\',
+sensor_type = \''.sensor_type.'\',
+description = \''.$description.'\'
+WHERE sensor_id = \''.$sensorid.'\';
+
+//Delete Sensor:
+DELETE FROM sensors
+WHERE sensor_id=\''.$sensorid.'\';
+
+//Add Person (and user):
+
+INSERT INTO persons (first_name, last_name, address, email, phone)
+VALUES (\''.$fname.'\',\''.$lname.'\',\''.$address.'\',\''.$email.'\',\''.$phone.'\');
+
+(Commit, then retreive their person_id)
+
+INSERT INTO users(user_name, password, role, person_id, date_registered)
+VALUES(
+\''.$username.'\',
+\''.$password.'\',
+\''.$role.'\',
+(SELECT p.person_id
+FROM persons p
+WHERE p.email = \''.$email.'\'),
+GETDATE());
+
+//Update Person:
+UPDATE persons
+SET first_name = \''.$fname.'\',
+last_name = \''.$fname.'\',
+address = \''.$fname.'\',
+email = \''.$fname.'\',
+phone = \''.$fname.'\',
+WHERE person_id = \''.$person_id.'\';
+
+
+  
