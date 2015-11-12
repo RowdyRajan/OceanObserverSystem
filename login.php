@@ -1,6 +1,5 @@
 <html>
 	<body>
-		<h1>Confirm Test</h1>
 		<?php
 			include("PHPconnectionDB.php");
 			if(isset($_POST['confirm'])){
@@ -22,7 +21,10 @@
 					$count = $count +1;}
 					}		 		
 		 		if($count == 0){echo '<h2>Incorrect username or password!</h2>';}
-		 		else {echo '<p>Login successful</p>';}
+		 		else {	
+		 			header("Location:admin.php");
+		 			exit();
+		 			}
 		
 			}
 		?>
