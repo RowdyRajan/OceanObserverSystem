@@ -19,6 +19,18 @@ WHERE sensor_id = \''.$sensorid.'\';
 DELETE FROM sensors
 WHERE sensor_id=\''.$sensorid.'\';
 
+//Add Sensor Subscription:
+INSERT INTO subscriptions VALUES(\''.$sensor_id.'\', \''.$person_id.'\')';
+
+//Remove Sensor Subscription:
+DELETE FROM subscriptions WHERE (sensor_id = \''.$sensor_id.'\' and person_id = \''.$person_id.'\');
+
+//Show Subscribed Sensors:
+SELECT * FROM sensors WHERE sensor_id IN(SELECT sensor_id FROM subscriptions WHERE person_id = 2);
+
+//Show Unsubscribed Sensors:
+SELECT * FROM sensors WHERE sensor_id NOT IN(SELECT sensor_id FROM subscriptions WHERE person_id = 2);
+
 //Add Person (and user):
 
 INSERT INTO persons (first_name, last_name, address, email, phone)
