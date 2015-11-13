@@ -25,7 +25,8 @@ header("Location:index.php");
 		
 		#logout{
 			float:right;		
-		}		
+		}
+			
 	</style>
 		
 	<script>
