@@ -4,7 +4,7 @@
 		setcookie("Status", "", time()-3600);
 		setcookie("Person", "", time()-3600);
 		setcookie("Role", "", time()-3600);
-		header("Location:Login.html");
+		header("Location:index.php");
 	}
 ?>
 <html>
@@ -49,7 +49,7 @@
 		 			} elseif($role == 'd'){
 						header("Location:dataCurator.php");		 			
 		 			}else{
-		 				header("Location:login.php");
+		 				header("Location:index.php");
 		 			}
 		 			
 		 			
