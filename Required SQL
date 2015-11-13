@@ -1,3 +1,19 @@
+//LOGIN MODULE
+
+//Modify Personal Information:
+UPDATE persons
+SET first_name = \''.$fname.'\',
+last_name = \''.$fname.'\',
+address = \''.$fname.'\',
+email = \''.$fname.'\',
+phone = \''.$fname.'\',
+WHERE person_id = \''.$person_id.'\';
+
+//Modify Password:
+UPDATE users
+SET password = \''.$newpassword.'\'
+WHERE person_id = \''.$person_id.'\';
+
 //SENSOR AND USER MANAGEMENT MODULE///
 
 //Retrieve Sensors:
