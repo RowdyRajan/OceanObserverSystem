@@ -1,6 +1,11 @@
 <html>
 <?php
-include	("PHPconnectionDB.php"); 
+include	("PHPconnectionDB.php");
+//Redirects login if not signed in
+if(isset($_COOKIE['Status']) && $_COOKIE['Status'] == "LoggedIn" ){	 }
+else{
+header("Location:Login.html");		 
+} 
 ?>
 <head>
 	<title>Admin Dashboard </title>
@@ -16,6 +21,10 @@ include	("PHPconnectionDB.php");
 		.subheaders{
 			font-weight:bold;
 			text-decoration:underline;
+		}
+		
+		#logout{
+			float:right;		
 		}		
 	</style>
 		
@@ -23,6 +32,8 @@ include	("PHPconnectionDB.php");
 		$(function() {
     		$("#tabs").tabs();
   		});
+  		
+  		
 	</script>
 </head>
 
@@ -33,7 +44,7 @@ include	("PHPconnectionDB.php");
     <li><a href="#tabs-1">Sensor Management</a></li>
     <li><a href="#tabs-2">User Management</a></li>
     <li><a href="#tabs-3">Account Settings</a></li>
- 
+    <button id="logout">Log out</button>
   </ul>
   <div id="tabs-1">
 	Sensor management systems goes here!!
@@ -62,7 +73,7 @@ include	("PHPconnectionDB.php");
 		<input id="submitAddNewUser" type="submit" value="Add New User" name="submitNewUser"/>
 		
 	</form>
-
+	
 	<?php
 		if(isset($_POST['submitNewUser'])){
 				
@@ -71,6 +82,12 @@ include	("PHPconnectionDB.php");
 			
 			
 		}
+		 if(isset($_COOKIE['LoggedIn'])){
+			echo "YES";		 
+		 }else{
+			echo "NO";		 
+		 }
+		
 		
 	?>
   </div>
@@ -79,5 +96,10 @@ include	("PHPconnectionDB.php");
   </div>
 </div>
 </div> <!-- end of container-->
+<script type="text/javascript">
+	$("#logout").click(function(){
+			window.location.href = "login.php?status=logout";
+  		});
+</script>
 </body>
 </html>

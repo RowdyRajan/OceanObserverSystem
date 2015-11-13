@@ -1,3 +1,10 @@
+<?php
+	//Will log the user out and redirect to login.html given correct GET conditions
+	if(isset($_GET['status']) && $_GET['status'] == 'logout'){
+		setcookie("Status", "", time()-3600);
+		header("Location:Login.html");
+	}
+?>
 <html>
 	<body>
 		<?php
@@ -21,7 +28,9 @@
 					$count = $count +1;}
 					}		 		
 		 		if($count == 0){echo '<h2>Incorrect username or password!</h2>';}
-		 		else {	
+		 		else {
+		 			//Creating a cookie that lasts a day
+		 			setcookie("Status", "LoggedIn", time()+60*60*24);	
 		 			header("Location:admin.php");
 		 			exit();
 		 			}
