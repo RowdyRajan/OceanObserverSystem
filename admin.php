@@ -75,20 +75,8 @@ header("Location:Login.html");
 	</form>
 	
 	<?php
-		if(isset($_POST['submitNewUser'])){
-				
-			$username = $_POST['newUsername'];
-			$password = $_POST['newPassword'];
-			
-			
-		}
-		 if(isset($_COOKIE['LoggedIn'])){
-			echo "YES";		 
-		 }else{
-			echo "NO";		 
-		 }
-		
-		
+		echo $_COOKIE["ROLE"];
+		echo "YES";
 	?>
   </div>
   <div id="tabs-3">
