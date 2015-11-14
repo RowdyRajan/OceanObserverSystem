@@ -26,6 +26,19 @@ header("Location:index.php");
 		#logout{
 			float:right;		
 		}
+		
+		#divAddNewUser{
+			display: None;		
+		}
+		
+		#divAddExistingUser{
+			display: None;		
+		}
+		
+		.ui-tabs {
+			height:100%;			
+		}
+		
 			
 	</style>
 		
@@ -52,7 +65,12 @@ header("Location:index.php");
   </div>
   <div id="tabs-2">
   <h3 class="subheaders">Add Users</h3>
-	<form name="addUser"method="post" action="admin.php">
+  	
+  	<button id="btnAddNewUser"> Add New User</button>
+  	<button id="btnAddExistingUser"> Add Existing User </button>
+  	
+  	<div id="divAddNewUser">
+	<form name="addNewUser"method="post" action="admin.php">
 		Enter new username: <br/>
 		<input type="text" name="newUsername"/> <br/>
 		Enter new users password:<br/>	
@@ -72,23 +90,65 @@ header("Location:index.php");
 		Scientist<input type="radio" name="role"/>
 		Data Curator<input type="radio" name="role"/><br/>
 		<input id="submitAddNewUser" type="submit" value="Add New User" name="submitNewUser"/>
-		
-	</form>
 	
-	<?php
-		echo $_COOKIE["ROLE"];
-		echo "YES";
-	?>
-  </div>
+	</form>
+	</div>
+	
+	<div id="divAddExistingUser">
+	<form name="addExistingUser"method="post" action="admin.php">
+		Enter email:<br/>	
+		<input type="text" name="newEmail"/> <br/>
+		Enter new username: <br/>
+		<input type="text" name="newUsername"/> <br/>
+		Enter new users password:<br/>	
+		<input type="text" name="newPassword"/> <br/>
+		Select role:<br/>	
+		Admin<input type="radio" name="role"/>
+		Scientist<input type="radio" name="role"/>
+		Data Curator<input type="radio" name="role"/><br/>
+		<input id="submitExistingUser" type="submit" value="Add User" name="submitExistingNewUser"/>
+	
+	</form>
+	</div>
+	
+  </div> <!-- end of second tab -->
   <div id="tabs-3">
    	Account Settings go here!
   </div>
 </div>
 </div> <!-- end of container-->
 <script type="text/javascript">
+	//Logout button on click
 	$("#logout").click(function(){
 			window.location.href = "login.php?status=logout";
   		});
+  	//Handing the add users
+  	
+  	var newUserShowing = false;
+  	var existingUserShowing = false;	
+  	$("#btnAddNewUser").click(function () {
+ 		if(existingUserShowing == true){
+ 			$("#divAddExistingUser").fadeOut();
+  			$("#divAddNewUser").fadeIn();
+  			existingUserShowing = false;	
+  			newUserShowing = true;
+  		}else{
+			$("#divAddNewUser").fadeIn();
+			newUserShowing = true; 		
+  		}
+  	});
+  	
+  	$("#btnAddExistingUser").click(function () {
+ 		if(newUserShowing == true){
+ 			$("#divAddNewUser").fadeOut();
+  			$("#divAddExistingUser").fadeIn();
+  			existingUserShowing = true;	
+  			newUserShowing = false;
+  		}else{
+			$("#divAddExistingUser").fadeIn();
+			existngUserShowing = true; 		
+  		}
+  	});
 </script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <?php
-	//Will log the user out and redirect to login.html given correct GET conditions
+	//Will log the user out and redirect to index.php given correct GET conditions
 	if(isset($_GET['status']) && $_GET['status'] == 'logout'){
 		setcookie("Status", "", time()-3600);
 		setcookie("Person", "", time()-3600);
