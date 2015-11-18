@@ -16,10 +16,12 @@ and perform query check using login.php Response back will be dependant on PHP r
 <html>
 	<body>
 		<h1>Ocean Observation System</h1>
-		<form name = "login" method ="post" action="login.php">
+		<form name = "login" method ="post" action="Index.php">
 		Username: <input type="text" name="username"/><br/>
 		Password: <input type="password" name="password"/><br/>
 		<input type = "submit" name="confirm" value="Log In"/>
+		<input type = "submit" name="confirm" value = "Change Password"/>
+		<input type = "submit" name="confirm" value = "Modify Personal Info"/>
 		</form>
 	</body>
 </html>
