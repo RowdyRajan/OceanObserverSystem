@@ -32,5 +32,31 @@
 			echo htmlentities($err['message']);
 		}
 		$res = oci_commit($conn);
+	} elseif(isset($_POST["submitExistingNewUser"])) {
+		$email = $_POST['newEmail'];
+		$username = $_POST["newUsername"];
+		$password = $_POST["newPassword"];
+		$role = $_POST["role"];
+		
+		$sql = 'SELECT *
+					FROM persons
+					WHERE email = \''.$email.'\'';
+		
+		$conn = connect();
+		$stid = oci_parse($conn, $sql);
+		
+		$res=oci_execute($stid, OCI_DEFAULT);
+		if (!$res) {
+			$err = oci_error($stid);
+			echo htmlentities($err['message']);
+		}
+		
+		$row = oci_fetch_array($stid, OCI_ASSOC);
+		
+		if($row == NULL){
+					
+		}else{
+			echo $row['PERSON_ID'];		
+		}
 	}
 ?>

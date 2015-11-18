@@ -98,7 +98,7 @@ header("Location:index.php");
 	</div>
 	
 	<div id="divAddExistingUser">
-	<form name="addExistingUser"method="post" action="admin.php">
+	<form name="addExistingUser"method="post" action="addUser.php">
 		Enter email:<br/>	
 		<input type="text" name="newEmail" required/> <br/>
 		Enter new username: <br/>
@@ -106,9 +106,9 @@ header("Location:index.php");
 		Enter new users password:<br/>	
 		<input type="password" name="newPassword" required/> <br/>
 		Select role:<br/>	
-		Admin<input type="radio" name="role" required/>
-		Scientist<input type="radio" name="role" required/>
-		Data Curator<input type="radio" name="role" required/><br/>
+		Admin<input type="radio" name="role" value="a" required />
+		Scientist<input type="radio" name="role" value="s" required/>
+		Data Curator<input type="radio" name="role" value="d" required/><br/>
 		<input id="submitExistingUser" type="submit" value="Add User" name="submitExistingNewUser"/>
 	
 	</form>
