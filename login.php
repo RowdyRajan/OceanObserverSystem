@@ -5,6 +5,7 @@
 		setcookie("Status", "", time()-3600);
 		setcookie("Person", "", time()-3600);
 		setcookie("Role", "", time()-3600);
+		setcookie("Username", time()-3600);
 		header("Location:index.php");
 	}
 ?>
@@ -45,9 +46,8 @@
 		 			setcookie("Person", $selectedRow["PERSON_ID"], time()+60*60*24);
 		 			setcookie("Role", $role, time()+60*60*24);
 		 			setcookie("Status", "LoggedIn", time()+60*60*24);
-		 			
+		 			setcookie("Username", $selectedRow["USER_NAME"],time()+60*60*24);
 		 			if($role == 'a'){
-		 				
 		 				header("Location:admin.php");
 		 			} elseif($role == 's'){
 				 		header("Location:scientist.php");	

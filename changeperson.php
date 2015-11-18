@@ -2,8 +2,8 @@
 	<body>
 		<?php
 			include("PHPconnectionDB.php");
-			if(isset($_POST['change'])){
-				$person=$_POST['pid'];
+			if(isset($_POST['changeperson'])){
+				$person=$_COOKIE['Person'];
 				$fname=$_POST['fname'];
 				$lname=$_POST['lname'];
 				$addr=$_POST['addr'];
@@ -23,13 +23,13 @@
 				if (!$res) {
 					$err = oci_error($stid);
 					header('Refresh: 3; url = index.php');
-		 			echo '<h2>Error: invalid entry change, returning to login page...</h2>';
+		 			echo '<h2>Error: invalid entry change, returning to user page...</h2>';
 		 			exit;
 		 		}
 		 		$res = oci_commit($conn);
 					
 		 		header('Refresh: 3; url = index.php');
-		 		echo '<h2>Information successfully changed, returning to login page...</h2>';
+		 		echo '<h2>Information successfully changed, returning to user page...</h2>';
 				}
 		
 		?>
