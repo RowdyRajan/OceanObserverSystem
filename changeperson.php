@@ -12,21 +12,23 @@
 
 				$conn=connect();
 				$sql = '	UPDATE persons
-							SET 	first_name = \''.$fname.'\' ,
-									last_name = \''.$lname.'\' ,
-									address = \''.$addr.'\' ,
-									email = \''.$email.'\' ,
-									phone = \''.$phone.'\' ,
+							SET 	first_name = \''.$fname.'\',
+									last_name = \''.$lname.'\',
+									address = \''.$addr.'\',
+									phone = \''.$phone.'\', 
+									email = \''.$email.'\'
 							WHERE person_id = \''.$person.'\'';
 				$stid = oci_parse($conn, $sql);
 				$res = oci_execute($stid, OCI_DEFAULT);
 				if (!$res) {
 					$err = oci_error($stid);
-					echo htmlentities($err['message']);
+					header('Refresh: 3; url = index.php');
+		 			echo '<h2>Error: invalid entry change, returning to login page...</h2>';
+		 			exit;
 		 		}
 		 		$res = oci_commit($conn);
 					
-		 		header('Refresh: 99; url = Login.html');
+		 		header('Refresh: 3; url = index.php');
 		 		echo '<h2>Information successfully changed, returning to login page...</h2>';
 				}
 		
