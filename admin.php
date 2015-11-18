@@ -40,6 +40,13 @@ header("Location:index.php");
 			height:100%;			
 		}
 		
+		.error{
+			color: red;		
+		}
+		.success{
+			color:green;		
+		}
+		
 			
 	</style>
 		
@@ -69,6 +76,22 @@ header("Location:index.php");
   	
   	<button id="btnAddNewUser"> Add New User</button>
   	<button id="btnAddExistingUser"> Add Existing User </button>
+  	<?php
+  		if(isset($_GET['error']) && $_GET['error'] == 'general'){
+			echo "<span class='error'> Error adding user </span>" ;		
+  		} elseif(isset($_GET['error']) && $_GET['error'] == 'invalidEmail') {
+			echo "<span class='error'> Error: invalid email </span>"; 	
+  		} elseif(isset($_GET['error']) && $_GET['error'] == 'takenUsername') {
+			echo "<span class='error'> Error: taken Username </span>"; 	
+  		} elseif(isset($_GET['error']) && $_GET['error'] == 'roleTaken') {
+			echo "<span class='error'> Error: Person already has this role </span>"; 	
+  		}
+  		
+  		if(isset($_GET['success']) && $_GET['success'] == 'generalAdd'){
+  			echo "<span class='success'> Successfully added User </span>";
+  		}
+  			
+  	?>
   	
   	<div id="divAddNewUser">
 	<form name="addNewUser"method="post" action="addUser.php">

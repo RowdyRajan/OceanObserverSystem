@@ -1,46 +1,10 @@
 <?php
 	include("PHPconnectionDB.php");
-	if(isset($_POST["submitNewUser"])){
-		
-		$pid  = $_POST["newPersonID"];
-		$fname = $_POST['newFirstName'];
-		$lname = $_POST['newLastName'];
-		$address = $_POST['newAdress'];
-		$email = $_POST['newEmail'];
-		$phone = $_POST['newPhoneNumber'];
-		$username = $_POST["newUsername"];
-		$password = $_POST["newPassword"];
-		$role = $_POST["role"];
-		
-		$conn = connect();
-		$sql = ' INSERT INTO persons (person_id,first_name, last_name, address, email, phone)
-					VALUES (\''.$pid.'\',\''.$fname.'\',\''.$lname.'\',\''.$address.'\',\''.$email.'\',\''.$phone.'\')';
-		$stid = oci_parse($conn, $sql);
-		$res=oci_execute($stid, OCI_DEFAULT);
-		if (!$res) {
-			$err = oci_error($stid);
-			echo htmlentities($err['message']);
-		}
-		$res = oci_commit($conn);
-			
-		$sql = 'INSERT INTO users(user_name, password, role, person_id, date_registered)
-				VALUES(\''.$username.'\',\''.$password.'\',\''.$role.'\', \''.$pid.'\' , to_date(sysdate, \'dd/mm/yyyy\'))';
-		$stid = oci_parse($conn, $sql);
-		$res=oci_execute($stid, OCI_DEFAULT);
-		if (!$res) {
-			$err = oci_error($stid);
-			echo htmlentities($err['message']);
-		}
-		$res = oci_commit($conn);
-	} elseif(isset($_POST["submitExistingNewUser"])) {
-		$email = $_POST['newEmail'];
-		$username = $_POST["newUsername"];
-		$password = $_POST["newPassword"];
-		$role = $_POST["role"];
-		
+	//Checks to see if username is already in the database
+	function validUserName ($username) {
 		$sql = 'SELECT *
-					FROM persons
-					WHERE email = \''.$email.'\'';
+					FROM users
+					WHERE user_name = \''.$username.'\'';
 		
 		$conn = connect();
 		$stid = oci_parse($conn, $sql);
@@ -53,10 +17,120 @@
 		
 		$row = oci_fetch_array($stid, OCI_ASSOC);
 		
-		if($row == NULL){
-					
-		}else{
-			echo $row['PERSON_ID'];		
+		if($row != NULL){
+			header("location:admin.php?error=takenUsername");		
 		}
+	}
+	
+	//Checks if a person already has the added role 
+	function validRole ($pid,$role) {
+		$sql = 'SELECT *
+					FROM users
+					WHERE person_id = \''.$pid.'\' 
+					AND role = \''.$role.'\'';
+		$conn = connect();
+		$stid = oci_parse($conn, $sql);
+		
+		$res=oci_execute($stid, OCI_DEFAULT);
+		if (!$res) {
+			$err = oci_error($stid);
+			echo htmlentities($err['message']);
+			//header("location:admin.php?error=general");
+		}
+		
+		$row = oci_fetch_array($stid, OCI_ASSOC);
+		
+		if($row != NULL){
+			header("location:admin.php?error=roleTaken");		
+		}
+	}
+	//New user button was clicked
+	if(isset($_POST["submitNewUser"])){
+		
+		$pid  = $_POST["newPersonID"];
+		$fname = $_POST['newFirstName'];
+		$lname = $_POST['newLastName'];
+		$address = $_POST['newAdress'];
+		$email = $_POST['newEmail'];
+		$phone = $_POST['newPhoneNumber'];
+		$username = $_POST["newUsername"];
+		$password = $_POST["newPassword"];
+		$role = $_POST["role"];
+		
+		validUserName($username);
+		
+		$conn = connect();
+		$sql = ' INSERT INTO persons (person_id,first_name, last_name, address, email, phone)
+					VALUES (\''.$pid.'\',\''.$fname.'\',\''.$lname.'\',\''.$address.'\',\''.$email.'\',\''.$phone.'\')';
+		$stid = oci_parse($conn, $sql);
+		$res=oci_execute($stid, OCI_DEFAULT);
+		if (!$res) {
+			$err = oci_error($stid);
+			echo htmlentities($err['message']);
+			header("location:admin.php?error=general");
+		}
+		$res = oci_commit($conn);
+			
+		$sql = 'INSERT INTO users(user_name, password, role, person_id, date_registered)
+				VALUES(\''.$username.'\',\''.$password.'\',\''.$role.'\', \''.$pid.'\' , to_date(sysdate, \'dd/mm/yyyy\'))';
+		$stid = oci_parse($conn, $sql);
+		$res=oci_execute($stid, OCI_DEFAULT);
+		if (!$res) {
+			$err = oci_error($stid);
+			echo htmlentities($err['message']);
+			//header("location:admin.php?error=general");
+		}
+		$res = oci_commit($conn);
+		header("location:admin.php?success=generalAdd");
+	} elseif(isset($_POST["submitExistingNewUser"])) {
+		$email = $_POST['newEmail'];
+		$username = $_POST["newUsername"];
+		$password = $_POST["newPassword"];
+		$role = $_POST["role"];
+		
+		validUserName($username);
+		
+		$sql = 'SELECT *
+					FROM persons
+					WHERE email = \''.$email.'\'';
+		
+		$conn = connect();
+		$stid = oci_parse($conn, $sql);
+		
+		$res=oci_execute($stid, OCI_DEFAULT);
+		if (!$res) {
+			$err = oci_error($stid);
+			echo htmlentities($err['message']);
+			//header("location:admin.php?error=general");
+		}
+		
+		$row = oci_fetch_array($stid, OCI_ASSOC);
+		
+		if($row == NULL){
+			header("location:admin.php?error=invalidEmail");		
+		}
+		validRole($row["PERSON_ID"],$role);
+		
+		$sql = 'INSERT INTO users(user_name, password, role, person_id, date_registered)
+				VALUES(
+				\''.$username.'\',
+				\''.$password.'\',
+				\''.$role.'\',
+				(SELECT p.person_id
+				FROM persons p
+				WHERE p.email = \''.$email.'\'),
+				to_date(sysdate, \'dd/mm/yyyy\'))';
+		
+		$stid = oci_parse($conn, $sql);
+		
+		$res=oci_execute($stid, OCI_DEFAULT);
+		if (!$res) {
+			$err = oci_error($stid);
+			echo htmlentities($err['message']);
+			header("location:admin.php?error=general");
+		}
+		
+		$res = oci_commit($conn);
+		header("location:admin.php?success=generalAdd");
 	}
 ?>
