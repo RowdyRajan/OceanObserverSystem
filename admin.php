@@ -1,4 +1,6 @@
+
 <html>
+
 <?php
 include	("PHPconnectionDB.php");
 //Redirects login if not signed in
@@ -17,7 +19,6 @@ header("Location:index.php");
 		#submitAddNewUser{
 			margin-top:10px;
 		}
-
 		.subheaders{
 			font-weight:bold;
 			text-decoration:underline;
