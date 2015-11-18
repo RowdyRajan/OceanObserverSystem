@@ -45,6 +45,7 @@
 		 			setcookie("Person", $selectedRow["PERSON_ID"], time()+60*60*24);
 		 			setcookie("Role", $role, time()+60*60*24);
 		 			setcookie("Status", "LoggedIn", time()+60*60*24);
+		 			setcookie("Username", $selectedRow["USER_NAME"],time()+60*60*24);
 		 			
 		 			if($role == 'a'){
 		 				
