@@ -75,6 +75,8 @@ header("Location:index.php");
 		<input type="text" name="newUsername" required/> <br/>
 		Enter new users password:<br/>	
 		<input type="password" name="newPassword" required/> <br/>
+		Enter new personID: <br/>
+		<input type="text" name="newPersonID" required/> <br/>
 		Enter first name:<br/>	
 		<input type="text" name="newFirstName" required/> <br/>
 		Enter last name:<br/>	
