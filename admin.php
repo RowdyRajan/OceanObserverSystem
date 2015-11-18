@@ -72,23 +72,23 @@ header("Location:index.php");
   	<div id="divAddNewUser">
 	<form name="addNewUser"method="post" action="admin.php">
 		Enter new username: <br/>
-		<input type="text" name="newUsername"/> <br/>
+		<input type="text" name="newUsername" required/> <br/>
 		Enter new users password:<br/>	
-		<input type="text" name="newPassword"/> <br/>
+		<input type="password" name="newPassword" required/> <br/>
 		Enter first name:<br/>	
-		<input type="text" name="newFirstName"/> <br/>
+		<input type="text" name="newFirstName" required/> <br/>
 		Enter last name:<br/>	
-		<input type="text" name="newLastName"/> <br/>
+		<input type="text" name="newLastName" required/> <br/>
 		Enter address:<br/>	
-		<input type="text" name="newAdress"/> <br/>
+		<input type="text" name="newAdress" required/> <br/>
 		Enter email:<br/>	
-		<input type="text" name="newEmail"/> <br/>
+		<input type="text" name="newEmail" required/> <br/>
 		Enter phone number:<br/>	
-		<input type="text" name="newPhoneNumber"/> <br/>
+		<input type="text" name="newPhoneNumber" required/> <br/>
 		Select role:<br/>	
-		Admin<input type="radio" name="role"/>
-		Scientist<input type="radio" name="role"/>
-		Data Curator<input type="radio" name="role"/><br/>
+		Admin<input type="radio" name="role" required/>
+		Scientist<input type="radio" name="role" required/>
+		Data Curator<input type="radio" name="role" required/><br/>
 		<input id="submitAddNewUser" type="submit" value="Add New User" name="submitNewUser"/>
 	
 	</form>
@@ -97,15 +97,15 @@ header("Location:index.php");
 	<div id="divAddExistingUser">
 	<form name="addExistingUser"method="post" action="admin.php">
 		Enter email:<br/>	
-		<input type="text" name="newEmail"/> <br/>
+		<input type="text" name="newEmail" required/> <br/>
 		Enter new username: <br/>
-		<input type="text" name="newUsername"/> <br/>
+		<input type="text" name="newUsername" required/> <br/>
 		Enter new users password:<br/>	
-		<input type="text" name="newPassword"/> <br/>
+		<input type="password" name="newPassword" required/> <br/>
 		Select role:<br/>	
-		Admin<input type="radio" name="role"/>
-		Scientist<input type="radio" name="role"/>
-		Data Curator<input type="radio" name="role"/><br/>
+		Admin<input type="radio" name="role" required/>
+		Scientist<input type="radio" name="role" required/>
+		Data Curator<input type="radio" name="role" required/><br/>
 		<input id="submitExistingUser" type="submit" value="Add User" name="submitExistingNewUser"/>
 	
 	</form>
@@ -129,7 +129,10 @@ header("Location:index.php");
   	$("#btnAddNewUser").click(function () {
  		if(existingUserShowing == true){
  			$("#divAddExistingUser").fadeOut();
-  			$("#divAddNewUser").fadeIn();
+ 			$("#divAddExistingUser").promise().done(function () {
+ 					$("#divAddNewUser").fadeIn();
+ 			});
+  			
   			existingUserShowing = false;	
   			newUserShowing = true;
   		}else{
@@ -140,15 +143,20 @@ header("Location:index.php");
   	
   	$("#btnAddExistingUser").click(function () {
  		if(newUserShowing == true){
- 			$("#divAddNewUser").fadeOut();
-  			$("#divAddExistingUser").fadeIn();
+ 			$("#divAddNewUser").fadeOut('fast');
+ 			$("#divAddNewUser").promise().done(function(){
+ 				$("#divAddExistingUser").fadeIn();
+ 				});
+  			
   			existingUserShowing = true;	
   			newUserShowing = false;
   		}else{
 			$("#divAddExistingUser").fadeIn();
-			existngUserShowing = true; 		
+			existingUserShowing = true; 		
   		}
   	});
+  	
+  	
 </script>
 </body>
 </html>
