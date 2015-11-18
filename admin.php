@@ -70,7 +70,7 @@ header("Location:index.php");
   	<button id="btnAddExistingUser"> Add Existing User </button>
   	
   	<div id="divAddNewUser">
-	<form name="addNewUser"method="post" action="admin.php">
+	<form name="addNewUser"method="post" action="addUser.php">
 		Enter new username: <br/>
 		<input type="text" name="newUsername" required/> <br/>
 		Enter new users password:<br/>	
@@ -88,9 +88,9 @@ header("Location:index.php");
 		Enter phone number:<br/>	
 		<input type="text" name="newPhoneNumber" required/> <br/>
 		Select role:<br/>	
-		Admin<input type="radio" name="role" required/>
-		Scientist<input type="radio" name="role" required/>
-		Data Curator<input type="radio" name="role" required/><br/>
+		Admin<input type="radio" name="role" value="a"  required/>
+		Scientist<input type="radio" name="role" value="s" required/>
+		Data Curator<input type="radio" name="role" value="d" required/><br/>
 		<input id="submitAddNewUser" type="submit" value="Add New User" name="submitNewUser"/>
 	
 	</form>
