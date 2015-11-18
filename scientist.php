@@ -1,12 +1,12 @@
 -<html>
 -<?php
--include	("PHPconnectionDB.php");
+-	include("PHPconnectionDB.php");
 -?>
 -<head>
 -	<title>Scientist Dashboard</title>
 -	<script type="text/javascript" src="libraries/jquery-ui/external/jquery/jquery.js"></script>
 -	<script type="text/javascript" src="libraries/jquery-ui/jquery-ui.js"></script>
--	<link rel="stylesheet" href="libraries/jquery-ui/jquery-ui.min.css"></script>
+-	<link rel="stylesheet" href="libraries/jquery-ui/jquery-ui.min.css">
 -	<script>
 -		$(function() {
 -    		$("#tabs").tabs();
