@@ -1,4 +1,6 @@
-html>
+
+<html>
+
 <?php
 include	("PHPconnectionDB.php");
 //Redirects login if not signed in

@@ -1,7 +1,21 @@
+
+<?php
+	//Will log the user out and redirect to index.php given correct GET conditions
+	if(isset($_GET['status']) && $_GET['status'] == 'logout'){
+		setcookie("Status", "", time()-3600);
+		setcookie("Person", "", time()-3600);
+		setcookie("Role", "", time()-3600);
+		header("Location:index.php");
+	}
+?>
+
 <html>
 	<body>
 		<?php
 			include("PHPconnectionDB.php");
+			
+			
+
 			if(isset($_POST['confirm'])){
 				$username=$_POST['username'];
 				$password=$_POST['password'];	
@@ -16,32 +30,37 @@
 					$err = oci_error($stid);
 					echo htmlentities($err['message']);
 		 		}
-				$row = oci_fetch_row($stid);
+
+				$row = oci_fetch_array($stid, OCI_ASSOC);
 				$selectedRow = $row;
 
 		 		if($row == NULL){echo '<h2>Incorrect username or password!</h2>';}
 
 		 		elseif($_POST['confirm'] == "Log In") {
 		 			
+
 		 			//Creating a cookie that lasts a day
 		 			
 		 			$role = $selectedRow["ROLE"];
 		 			echo $role;
-		 			echo 
+		 			echo "IN";
 		 			setcookie("Person", $selectedRow["PERSON_ID"], time()+60*60*24);
 		 			setcookie("Role", $role, time()+60*60*24);
 		 			setcookie("Status", "LoggedIn", time()+60*60*24);
 		 			
 		 			if($role == 'a'){
+		 				
 		 				header("Location:admin.php");
 		 			} elseif($role == 's'){
 				 		header("Location:scientist.php");	
 		 			} elseif($role == 'd'){
 						header("Location:dataCurator.php");		 			
 		 			}else{
-		 				header("Location:index.php");
+		 				
+		 				//header("Location:index.php");
 		 			}
-		 		}
+
+		 		} 
 		 		elseif($_POST['confirm'] == "Change Password") {
 					echo '<h1>Password Change for '.$username.'</h1>';
 					echo '<form name = "changepass" method = "post" action = "changepassword.php">';
@@ -76,3 +95,4 @@
 		?>
 	</body>
 </html>
+
