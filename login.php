@@ -42,8 +42,6 @@
 		 			//Creating a cookie that lasts a day
 		 			
 		 			$role = $selectedRow["ROLE"];
-		 			echo $role;
-		 			echo "IN";
 		 			setcookie("Person", $selectedRow["PERSON_ID"], time()+60*60*24);
 		 			setcookie("Role", $role, time()+60*60*24);
 		 			setcookie("Status", "LoggedIn", time()+60*60*24);

@@ -22,13 +22,13 @@
 				$res = oci_execute($stid, OCI_DEFAULT);
 				if (!$res) {
 					$err = oci_error($stid);
-					header('Refresh: 3; url = Index.php');
+					header('Refresh: 3; url = index.php');
 		 			echo '<h2>Error: invalid entry change, returning to login page...</h2>';
 		 			exit;
 		 		}
 		 		$res = oci_commit($conn);
 					
-		 		header('Refresh: 3; url = Index.php');
+		 		header('Refresh: 3; url = index.php');
 		 		echo '<h2>Information successfully changed, returning to login page...</h2>';
 				}
 		
