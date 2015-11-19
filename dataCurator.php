@@ -17,6 +17,9 @@ header("Location:index.php");
 		#logout{
 			float:right;		
 		}	
+		#divUploadImage{
+			display: None;
+		}
 		#divChangePassword{
 			display: None;
 		}
@@ -42,7 +45,19 @@ header("Location:index.php");
     <button id="logout">Log out</button>
   </ul>
   <div id="tabs-1">
-   	Upload goes here
+   	<h3 class="subheaders">Upload Data to the Server</h3>
+  	<button id="btnUploadImage"> Upload Image</button>
+	<div id="divUploadImage">
+		<?php echo '<h3>Uploading Image:</h3>';
+		echo '<form enctype="multipart/form-data" name = "uploadimage" method = "post" action = "uploadimage.php">';
+		echo 'Image ID: <input type="number" name="image_id" pattern="[0-9]" required="true"/><br/>';
+		echo 'Sensor ID: <input type="number" name="sensor_id" pattern="[0-9]" required="true"/><br/>';
+		echo 'Date Created (dd/mm/yyyy): <input type="date" name="date_created" size="10" 
+			value = "'.date(d).'/'.date(m).'/'.date(Y).'"/><br/>';
+		echo 'Description: <input type="text" name="description" maxlength="128" size="64"/><br/>';
+		echo 'File: <input type="file" name="imageFile" accept=".jpg" id="imageFile"/><br/>';
+		echo '<input type = "submit" name ="imageSubmit" value = "Submit Image"/></form>'; ?>
+	</div>
   </div>
   <div id="tabs-2">
    	<h3 class="subheaders">Change User Password/Personal Information</h3>
@@ -86,6 +101,19 @@ header("Location:index.php");
 	$("#logout").click(function(){
 			window.location.href = "login.php?status=logout";
   		});
+		
+	//Handling Upload
+	var image = false;
+	$("#btnUploadImage").click(function () {
+		if(image == true){
+			$("#divUploadImage").fadeOut('fast');
+			image = false;
+		}else{
+			$("#divUploadImage").fadeIn();
+			image = true;
+		}
+	});
+	
   	//Handling Personal Info Change
   	var Password = false;
   	var Personal = false;	
