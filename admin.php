@@ -47,6 +47,13 @@ header("Location:index.php");
 			color:green;		
 		}
 		
+		#divDeleteUser{
+			display:none;		
+		}
+		
+		#divDeletePerson{
+			display:none;		
+		}
 			
 	</style>
 		
@@ -136,6 +143,29 @@ header("Location:index.php");
 	
 	</form>
 	</div>
+
+	<br/>
+	<br/>
+	<!-- Delete user code -->
+	<button id="btnDeleteUser">Delete a User</button>
+  	<button id="btnDeletePerson"> Delete a person</button>
+  	
+  	<div id="divDeleteUser">
+		<form name="DeleteUser"method="post" action="deleteUser.php">
+			Enter Username you wish to delete:<br/>
+			<input type="text" name="deleteUsername" required/> <br/>
+			<input type="submit" value="Delete User" name="submitDeleteUser"/>	
+		</form>
+  	</div>
+  	
+  	<div id="divDeletePerson">
+  		<form name="DeletePerson"method="post" action="deleteUser.php">
+			Enter the email of person you wish to delete:<br/>
+			<input type="text" name="deletePerson" required/> <br/>
+			<input type="submit" value="Delete Person" name="submitDeleteUser"/>	
+		</form>
+  	</div>
+  	
 	
   </div> <!-- end of second tab -->
   <div id="tabs-3">
@@ -182,6 +212,39 @@ header("Location:index.php");
   		}
   	});
   	
+  	
+  	var deleteUserShowing = false;
+  	var deletePersonShowing = false;
+  		
+  	$("#btnDeleteUser").click(function () {
+ 		if(deletePersonShowing == true){
+ 			$("#divDeletePerson").fadeOut();
+ 			$("#divDeletePerson").promise().done(function () {
+ 					$("#divDeleteUser").fadeIn();
+ 			});
+  			
+  			deletePersonShowing = false;	
+  			deleteUserShowing = true;
+  		}else{
+			$("#divDeleteUser").fadeIn();
+			deleteUserShowing = true; 		
+  		}
+  	});
+  	
+  	$("#btnDeletePerson").click(function () {
+ 		if(deleteUserShowing == true){
+ 			$("#divDeleteUser").fadeOut('fast');
+ 			$("#divDeleteUser").promise().done(function(){
+ 				$("#divDeletePerson").fadeIn();
+ 				});
+  			
+  			deleteUserShowing = false;	
+  			deletePersonShowing = true;
+  		}else{
+			$("#divDeletePerson").fadeIn();
+			deletePersonShowing = true; 		
+  		}
+  	});
   	
 </script>
 </body>
