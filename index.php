@@ -20,8 +20,6 @@ and perform query check using login.php Response back will be dependant on PHP r
 		Username: <input type="text" name="username"/><br/>
 		Password: <input type="password" name="password"/><br/>
 		<input type = "submit" name="confirm" value="Log In"/>
-		<input type = "submit" name="confirm" value = "Change Password"/>
-		<input type = "submit" name="confirm" value = "Modify Personal Info"/>
 		</form>
 	</body>
 </html>
