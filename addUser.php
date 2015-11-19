@@ -18,7 +18,8 @@
 		$row = oci_fetch_array($stid, OCI_ASSOC);
 		
 		if($row != NULL){
-			header("location:admin.php?error=takenUsername");		
+			header("location:admin.php?error=takenUsername");
+			exit();		
 		}
 	}
 	
@@ -41,7 +42,8 @@
 		$row = oci_fetch_array($stid, OCI_ASSOC);
 		
 		if($row != NULL){
-			header("location:admin.php?error=roleTaken");		
+			header("location:admin.php?error=roleTaken");
+			exit();		
 		}
 	}
 	//New user button was clicked
@@ -68,6 +70,7 @@
 			$err = oci_error($stid);
 			echo htmlentities($err['message']);
 			header("location:admin.php?error=general");
+			exit();
 		}
 		$res = oci_commit($conn);
 			
@@ -82,6 +85,7 @@
 		}
 		$res = oci_commit($conn);
 		header("location:admin.php?success=generalAdd");
+		exit();
 	} elseif(isset($_POST["submitExistingNewUser"])) {
 		$email = $_POST['newEmail'];
 		$username = $_POST["newUsername"];
@@ -107,7 +111,8 @@
 		$row = oci_fetch_array($stid, OCI_ASSOC);
 		
 		if($row == NULL){
-			header("location:admin.php?error=invalidEmail");		
+			header("location:admin.php?error=invalidEmail");
+			exit();		
 		}
 		validRole($row["PERSON_ID"],$role);
 		
@@ -128,9 +133,11 @@
 			$err = oci_error($stid);
 			echo htmlentities($err['message']);
 			header("location:admin.php?error=general");
+			exit();
 		}
 		
 		$res = oci_commit($conn);
 		header("location:admin.php?success=generalAdd");
+		exit();
 	}
 ?>

@@ -161,6 +161,8 @@ header("Location:index.php");
   		
   		if(isset($_GET['dSuccess']) && $_GET['dSuccess'] == 'user'){
   			echo "<span class='success'> Successfully deleted User </span>";
+  		} elseif(isset($_GET['dSuccess']) && $_GET['dSuccess'] == 'person'){
+  			echo "<span class='success'> Successfully deleted a Person and all users associated with them </span>";
   		}
   			
   	?>
