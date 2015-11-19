@@ -150,6 +150,21 @@ header("Location:index.php");
 	<button id="btnDeleteUser">Delete a User</button>
   	<button id="btnDeletePerson"> Delete a person</button>
   	
+  	<?php
+  		if(isset($_GET['dError']) && $_GET['dError'] == 'general'){
+  			echo "<span class='error'> Error deleting target </span>" ;
+  		} elseif(isset($_GET['dError']) && $_GET['dError'] == 'invalidUserName'){
+			echo "<span class='error'> Invalid username </span>"; 		
+  		} elseif(isset($_GET['dError']) && $_GET['dError'] == 'invalidEmail'){
+			echo "<span class='error'> Invalid email </span>"; 		
+  		}
+  		
+  		if(isset($_GET['dSuccess']) && $_GET['dSuccess'] == 'user'){
+  			echo "<span class='success'> Successfully deleted User </span>";
+  		}
+  			
+  	?>
+  	
   	<div id="divDeleteUser">
 		<form name="DeleteUser"method="post" action="deleteUser.php">
 			Enter Username you wish to delete:<br/>
@@ -161,8 +176,8 @@ header("Location:index.php");
   	<div id="divDeletePerson">
   		<form name="DeletePerson"method="post" action="deleteUser.php">
 			Enter the email of person you wish to delete:<br/>
-			<input type="text" name="deletePerson" required/> <br/>
-			<input type="submit" value="Delete Person" name="submitDeleteUser"/>	
+			<input type="text" name="deleteEmail" required/> <br/>
+			<input type="submit" value="Delete Person" name="submitDeletePerson"/>	
 		</form>
   	</div>
   	
