@@ -17,7 +17,7 @@
 		
 		$row = oci_fetch_array($stid, OCI_ASSOC);
 		
-		if($row != NULL){
+		if($row == NULL){
 			header("location:admin.php?dError=invalidUsername");
 			exit();		
 		}

@@ -160,7 +160,7 @@ header("Location:index.php");
   	<?php
   		if(isset($_GET['dError']) && $_GET['dError'] == 'general'){
   			echo "<span class='error'> Error deleting target </span>" ;
-  		} elseif(isset($_GET['dError']) && $_GET['dError'] == 'invalidUserName'){
+  		} elseif(isset($_GET['dError']) && $_GET['dError'] == 'invalidUsername'){
 			echo "<span class='error'> Invalid username </span>"; 		
   		} elseif(isset($_GET['dError']) && $_GET['dError'] == 'invalidEmail'){
 			echo "<span class='error'> Invalid email </span>"; 		
