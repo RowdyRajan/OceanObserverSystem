@@ -39,11 +39,27 @@ header("Location:index.php");
 		.ui-tabs {
 			height:100%;			
 		}
+
+		
+		.error{
+			color: red;		
+		}
+		.success{
+			color:green;		
+		}
+		
+		#divDeleteUser{
+			display:none;		
+		}
+		
+		#divDeletePerson{
+			display:none;		
+		}
 		#divChangePassword{
-			display: None;
+			display: none;
 		}
 		#divChangePerson{
-			display: None;
+			display: none;
 		}
 			
 	</style>
@@ -74,6 +90,22 @@ header("Location:index.php");
   	
   	<button id="btnAddNewUser"> Add New User</button>
   	<button id="btnAddExistingUser"> Add Existing User </button>
+  	<?php
+  		if(isset($_GET['error']) && $_GET['error'] == 'general'){
+			echo "<span class='error'> Error adding user </span>" ;		
+  		} elseif(isset($_GET['error']) && $_GET['error'] == 'invalidEmail') {
+			echo "<span class='error'> Error: invalid email </span>"; 	
+  		} elseif(isset($_GET['error']) && $_GET['error'] == 'takenUsername') {
+			echo "<span class='error'> Error: taken Username </span>"; 	
+  		} elseif(isset($_GET['error']) && $_GET['error'] == 'roleTaken') {
+			echo "<span class='error'> Error: Person already has this role </span>"; 	
+  		}
+  		
+  		if(isset($_GET['success']) && $_GET['success'] == 'generalAdd'){
+  			echo "<span class='success'> Successfully added User </span>";
+  		}
+  			
+  	?>
   	
   	<div id="divAddNewUser">
 	<form name="addNewUser"method="post" action="addUser.php">
@@ -103,7 +135,7 @@ header("Location:index.php");
 	</div>
 	
 	<div id="divAddExistingUser">
-	<form name="addExistingUser"method="post" action="admin.php">
+	<form name="addExistingUser"method="post" action="addUser.php">
 		Enter email:<br/>	
 		<input type="text" name="newEmail" required/> <br/>
 		Enter new username: <br/>
@@ -111,13 +143,53 @@ header("Location:index.php");
 		Enter new users password:<br/>	
 		<input type="password" name="newPassword" required/> <br/>
 		Select role:<br/>	
-		Admin<input type="radio" name="role" required/>
-		Scientist<input type="radio" name="role" required/>
-		Data Curator<input type="radio" name="role" required/><br/>
+		Admin<input type="radio" name="role" value="a" required />
+		Scientist<input type="radio" name="role" value="s" required/>
+		Data Curator<input type="radio" name="role" value="d" required/><br/>
 		<input id="submitExistingUser" type="submit" value="Add User" name="submitExistingNewUser"/>
 	
 	</form>
 	</div>
+
+	<br/>
+	<br/>
+	<!-- Delete user code -->
+	<button id="btnDeleteUser">Delete a User</button>
+  	<button id="btnDeletePerson"> Delete a person</button>
+  	
+  	<?php
+  		if(isset($_GET['dError']) && $_GET['dError'] == 'general'){
+  			echo "<span class='error'> Error deleting target </span>" ;
+  		} elseif(isset($_GET['dError']) && $_GET['dError'] == 'invalidUserName'){
+			echo "<span class='error'> Invalid username </span>"; 		
+  		} elseif(isset($_GET['dError']) && $_GET['dError'] == 'invalidEmail'){
+			echo "<span class='error'> Invalid email </span>"; 		
+  		}
+  		
+  		if(isset($_GET['dSuccess']) && $_GET['dSuccess'] == 'user'){
+  			echo "<span class='success'> Successfully deleted User </span>";
+  		} elseif(isset($_GET['dSuccess']) && $_GET['dSuccess'] == 'person'){
+  			echo "<span class='success'> Successfully deleted a Person and all users associated with them </span>";
+  		}
+  			
+  	?>
+  	
+  	<div id="divDeleteUser">
+		<form name="DeleteUser"method="post" action="deleteUser.php">
+			Enter Username you wish to delete:<br/>
+			<input type="text" name="deleteUsername" required/> <br/>
+			<input type="submit" value="Delete User" name="submitDeleteUser"/>	
+		</form>
+  	</div>
+  	
+  	<div id="divDeletePerson">
+  		<form name="DeletePerson"method="post" action="deleteUser.php">
+			Enter the email of person you wish to delete:<br/>
+			<input type="text" name="deleteEmail" required/> <br/>
+			<input type="submit" value="Delete Person" name="submitDeletePerson"/>	
+		</form>
+  	</div>
+  	
 	
   </div> <!-- end of second tab -->
   <div id="tabs-3">
@@ -227,6 +299,39 @@ header("Location:index.php");
   		}
   	});
   	
+  	
+  	var deleteUserShowing = false;
+  	var deletePersonShowing = false;
+  		
+  	$("#btnDeleteUser").click(function () {
+ 		if(deletePersonShowing == true){
+ 			$("#divDeletePerson").fadeOut();
+ 			$("#divDeletePerson").promise().done(function () {
+ 					$("#divDeleteUser").fadeIn();
+ 			});
+  			
+  			deletePersonShowing = false;	
+  			deleteUserShowing = true;
+  		}else{
+			$("#divDeleteUser").fadeIn();
+			deleteUserShowing = true; 		
+  		}
+  	});
+  	
+  	$("#btnDeletePerson").click(function () {
+ 		if(deleteUserShowing == true){
+ 			$("#divDeleteUser").fadeOut('fast');
+ 			$("#divDeleteUser").promise().done(function(){
+ 				$("#divDeletePerson").fadeIn();
+ 				});
+  			
+  			deleteUserShowing = false;	
+  			deletePersonShowing = true;
+  		}else{
+			$("#divDeletePerson").fadeIn();
+			deletePersonShowing = true; 		
+  		}
+  	});
   	
 </script>
 </body>
