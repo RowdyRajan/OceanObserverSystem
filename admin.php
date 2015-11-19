@@ -4,7 +4,7 @@
 <?php
 include	("PHPconnectionDB.php");
 //Redirects login if not signed in
-if(isset($_COOKIE['Status']) && $_COOKIE['Status'] == "LoggedIn" ){	 }
+if(isset($_COOKIE['Status']) && $_COOKIE['Status'] == "LoggedIn" && $_COOKIE["Role"] == 'a' ){	 }
 else{
 header("Location:index.php");		 
 } 
@@ -39,7 +39,12 @@ header("Location:index.php");
 		.ui-tabs {
 			height:100%;			
 		}
-		
+		#divChangePassword{
+			display: None;
+		}
+		#divChangePerson{
+			display: None;
+		}
 			
 	</style>
 		
@@ -116,7 +121,38 @@ header("Location:index.php");
 	
   </div> <!-- end of second tab -->
   <div id="tabs-3">
-   	Account Settings go here!
+   	<h3 class="subheaders">Change User Password/Personal Information</h3>
+  	<button id="btnChangePassword"> Change Password</button>
+  	<button id="btnChangePerson"> Modify Personal Information </button>
+  	<div id="divChangePassword">
+		<?php echo '<h3>Password Change for '.$_COOKIE['Username'].'</h3>';
+		echo '<form name = "changepass" method = "post" action = "changepassword.php">';
+		echo 'New Password: <input type="password" name="password1"/><br/>';
+		echo 'Repeat New Password: <input type="password" name="password2"/><br/>';
+		echo '<input type = "submit" name = "changepassword" value = "Change Password"/></form>'; ?>
+	</div>
+	<div id="divChangePerson">
+		<?php 
+			$conn=connect();
+			$sqlp = '  	SELECT *
+							FROM persons p
+							WHERE p.person_id = \''.$_COOKIE['Person'].'\'';
+			$stidp = oci_parse($conn, $sqlp);
+			$res = oci_execute($stidp, OCI_DEFAULT);
+			if (!$res) {
+				$err = oci_error($stidp);
+				echo htmlentities($err['message']);
+	 			}		
+		$persons = oci_fetch_row($stidp);
+		echo '<h3>Personal Information change for '.$persons[1].' '.$persons[2].' </h3>';
+		echo '<form name = "changeperson" method = "post" action = "changeperson.php">';
+		echo 'First Name: <input type = "text" name="fname" value = '.$persons[1].' /> <br/>';
+		echo 'Last Name:	<input type = "text" name="lname" value = '.$persons[2].' /> <br/>';
+		echo 'Address:		<input type = "text" name="addr" value = '.$persons[3].' /> <br/>';
+		echo 'Email:		<input type = "text" name="email" value = '.$persons[4].' /> <br/>';
+		echo 'Phone:		<input type = "text" name="phone" value = '.$persons[5].' /> <br/>';
+		echo '<input type = "submit" name = "changeperson" value = "Change Personal Info" /></form>'; ?>
+	</div>
   </div>
 </div>
 </div> <!-- end of container-->
@@ -156,6 +192,38 @@ header("Location:index.php");
   		}else{
 			$("#divAddExistingUser").fadeIn();
 			existingUserShowing = true; 		
+  		}
+  	});
+  	
+  	//Handling Personal Info Changes
+  	var Password = false;
+  	var Personal = false;	
+  	$("#btnChangePassword").click(function () {
+ 		if(Personal == true){
+ 			$("#divChangePerson").fadeOut('fast');
+ 			$("#divChangePerson").promise().done(function () {
+ 					$("#divChangePassword").fadeIn();
+ 			});
+  			Personal = false;	
+  			Password = true;
+  		}else{
+			$("#divChangePassword").fadeIn();
+			Password = true; 		
+  		}
+  	});
+  	
+  	$("#btnChangePerson").click(function () {
+ 		if(Password == true){
+ 			$("#divChangePassword").fadeOut('fast');
+ 			$("#divChangePassword").promise().done(function(){
+ 				$("#divChangePerson").fadeIn();
+ 				});
+  			
+  			Personal = true;	
+  			Password = false;
+  		}else{
+			$("#divChangePerson").fadeIn();
+			Personal = true; 		
   		}
   	});
   	

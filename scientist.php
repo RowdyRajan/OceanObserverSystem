@@ -1,8 +1,7 @@
 <html>
 <?php
 include	("PHPconnectionDB.php");
-//Redirects login if not signed in
-if(isset($_COOKIE['Status']) && $_COOKIE['Status'] == "LoggedIn" ){	 }
+if(isset($_COOKIE['Status']) && $_COOKIE['Status'] == "LoggedIn" && $_COOKIE["Role"] == 's' ){	 }
 else{
 header("Location:index.php");		 
 } 
@@ -11,7 +10,20 @@ header("Location:index.php");
 	<title>Scientist Dashboard</title>
 	<script type="text/javascript" src="libraries/jquery-ui/external/jquery/jquery.js"></script>
 	<script type="text/javascript" src="libraries/jquery-ui/jquery-ui.js"></script>
-	<link rel="stylesheet" href="libraries/jquery-ui/jquery-ui.min.css"></script>
+	<link rel="stylesheet" href="libraries/jquery-ui/jquery-ui.min.css">
+	
+	<style type="text/css">
+		#logout{
+			float:right;		
+		}
+		#divChangePassword{
+			display: None;
+		}
+		#divChangePerson{
+			display: None;
+		}
+	</style>
+	
 	<script>
 		$(function() {
     		$("#tabs").tabs();
@@ -116,7 +128,6 @@ header("Location:index.php");
     Data analysis report generating go here!
   </div>
   <div id="tabs-4">
-   	Account Settings go here!
   	<h3 class="subheaders">Change User Password/Personal Information</h3>
   	<button id="btnChangePassword"> Change Password</button>
   	<button id="btnChangePerson"> Modify Personal Information </button>
@@ -150,6 +161,7 @@ header("Location:index.php");
 		echo '<input type = "submit" name = "changeperson" value = "Change Personal Info" /></form>'; ?>
 	</div>
 </div> <!-- end of container-->
+
 <script type="text/javascript">
 	//Logout button on click
 	$("#logout").click(function(){
@@ -188,6 +200,5 @@ header("Location:index.php");
   		}
   	});
   	</script>
-  	
 </body>
 </html>
