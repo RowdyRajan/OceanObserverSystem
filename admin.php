@@ -54,12 +54,12 @@ header("Location:index.php");
 		
 		#divDeletePerson{
 			display:none;		
-
+		}
 		#divChangePassword{
-			display: None;
+			display: none;
 		}
 		#divChangePerson{
-			display: None;
+			display: none;
 		}
 			
 	</style>
