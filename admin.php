@@ -83,8 +83,56 @@ header("Location:index.php");
     <button id="logout">Log out</button>
   </ul>
   <div id="tabs-1">
-	Sensor management systems goes here!!
-  </div>
+  	<h3 class="subheaders">Add Sensors</h3> 
+  		<?php
+  		if(isset($_GET['sError']) && $_GET['sError'] == 'general'){
+  			echo "<span class='error'> Error adding sensor </span>" ;
+  		} elseif(isset($_GET['sError']) && $_GET['sError'] == 'takenSensorname'){
+			  	echo "<span class='error'> Sensor Id already taken</span>" ;
+  		}
+  		
+  		if(isset($_GET['sSuccess']) && $_GET['sSuccess'] == 'addedSensor'){
+  			echo "<span class='success'> Successfully added sensor </span>";
+  		}
+  		?>
+
+  	<div id="divAddSensor">
+		<form id="formAddSensor" name="addSensor"method="post" action="sensorManagement.php">
+			Enter Sensor Id:<br/>	
+			<input type="text" name="sensorID" required/> <br/>
+			Enter Location:<br/>	
+			<input type="text" name="location" required/> <br/>
+			Enter description:<br/>	
+			<textarea form="formAddSensor" name="sensorDescription" ></textarea><br/>
+			Type:<br/>	
+			Audio<input type="radio" name="type" value="a"  required/>
+			Image<input type="radio" name="type" value="i" required/>
+			Scalar<input type="radio" name="type" value="s" required/><br/>
+			<input type="submit" value="Add Sensor" name="submitAddSensor"/>						
+		</form>
+	</div>
+	
+	<h3 class="subheaders">Remove Sensors</h3>
+	<?php
+  		if(isset($_GET['sError']) && $_GET['sError'] == 'deleteGeneral'){
+  			echo "<span class='error'> Error deleting sensor </span>" ;
+  		} elseif(isset($_GET['sError']) && $_GET['sError'] == 'invalidSensorname'){
+			  	echo "<span class='error'> Sensor Id does not exist</span>" ;
+  		}
+  		
+  		if(isset($_GET['sSuccess']) && $_GET['sSuccess'] == 'removedSensor'){
+  			echo "<span class='success'> Successfully removed sensor </span>";
+  		}
+  		?>
+  	<div id="divRemoveSensor">
+		<form name="removeSensor"method="post" action="sensorManagement.php">
+			Enter Sensor Id:<br/>	
+			<input type="text" name="sensorID" required/> <br/>
+			<input type="submit" value="Remove Sensor" name="submitRemoveSensor"/>						
+		</form>
+	</div>
+	
+  </div> <!-- end of tab one -->
   <div id="tabs-2">
   <h3 class="subheaders">Add Users</h3>
   	
@@ -152,8 +200,8 @@ header("Location:index.php");
 	</div>
 
 	<br/>
-	<br/>
 	<!-- Delete user code -->
+	<h3 class="subheaders">Delete Users</h3>
 	<button id="btnDeleteUser">Delete a User</button>
   	<button id="btnDeletePerson"> Delete a person</button>
   	
