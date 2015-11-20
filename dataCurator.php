@@ -52,8 +52,8 @@ header("Location:index.php");
 		echo '<form enctype="multipart/form-data" name = "uploadimage" method = "post" action = "uploadimage.php">';
 		echo 'Image ID: <input type="number" name="image_id" pattern="[0-9]" required="true"/><br/>';
 		echo 'Sensor ID: <input type="number" name="sensor_id" pattern="[0-9]" required="true"/><br/>';
-		echo 'Date Created (dd/mm/yyyy): <input type="date" name="date_created" size="10" 
-			value = "'.date(d).'/'.date(m).'/'.date(Y).'"/><br/>';
+		echo 'Date Created (dd/mm/yyyy hours(24):minutes:seconds): <input type="date" name="date_created" size="20" 
+			value = "'.date('d/m/Y').' '.date('H:i:s').'"/><br/>';
 		echo 'Description: <input type="text" name="description" maxlength="128" size="64"/><br/>';
 		echo 'File: <input type="file" name="imageFile" accept=".jpg" id="imageFile"/><br/>';
 		echo '<input type = "submit" name ="imageSubmit" value = "Submit Image"/></form>'; ?>
