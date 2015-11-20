@@ -53,7 +53,8 @@ else if(isset($_POST['sensor_id']) && isset($_POST['image_id'])) //&& isset($_PO
 	
 		//Check image_id taken
 	$conn=connect();
-	$sql = 'SELECT image_id FROM images WHERE image_id = '.$_POST['image_id'].'';
+	$sql = 'SELECT image_id FROM images
+			WHERE image_id = '.$_POST['image_id'].'';
 	$stid = oci_parse($conn, $sql );
 	//Execute a statement returned from oci_parse()
 	$res=oci_execute($stid, OCI_DEFAULT); 		   
@@ -62,9 +63,27 @@ else if(isset($_POST['sensor_id']) && isset($_POST['image_id'])) //&& isset($_PO
 		$err = oci_error($stid);
 		echo htmlentities($err['message']);
 	} 
+	$row = oci_fetch_array($stid, OCI_ASSOC);
+	if($row['IMAGE_ID']){
+		echo 'An image with the image id: '.$_POST['image_id'].' already exists. <br/>';
+		$uploadOk = 0;
+	}
+	oci_free_statement($stid);
 	
-	if(oci_fetch_array($stid, OCI_ASSOC)){
-		echo 'An image with the image id: '.$_POST['image_id'.' already exists.'];
+	$conn=connect();
+	$sql = 'SELECT sensor_id FROM sensors
+			WHERE sensor_id = '.$_POST['sensor_id'].'';
+	$stid = oci_parse($conn, $sql );
+	//Execute a statement returned from oci_parse()
+	$res=oci_execute($stid, OCI_DEFAULT); 		   
+	//if error, retrieve the error using the oci_error() function & output an error
+	if (!$res) {
+		$err = oci_error($stid);
+		echo htmlentities($err['message']);
+	} 
+	$row = oci_fetch_array($stid, OCI_ASSOC);
+	if(!$row['SENSOR_ID']){
+		echo 'The sensor with the sensor id: '.$_POST['sensor_id'].' does not exist. <br/>';
 		$uploadOk = 0;
 	}
 
