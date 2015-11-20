@@ -42,8 +42,6 @@ header("Location:index.php");
 		 			echo '<h2>Error: Incorrect search input, returning to user page...</h2>';
 		 			exit;
 		 	}
-		 	
-		insert into audio_recordings values('1', '42', '17-NOV-2015', '25', 'audio.wav', 'blah')
 		}
 	?>
 	<TABLE BORDER = 2>
