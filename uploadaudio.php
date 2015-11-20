@@ -81,9 +81,9 @@ else if(isset($_POST['sensor_id']) && isset($_POST['recording_id'])) //&& isset(
 		$conn=connect();
 		//RECOREDED DATA VS. RECOREDED DATA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		$sql = 
-			'INSERT INTO audio_recordings(recording_id, sensor_id, date_created, description, recorded_data)
+			'INSERT INTO audio_recordings(recording_id, sensor_id, date_created, length, description, recorded_data)
 			VALUES (\''.$_POST['recording_id'].'\', \''.$_POST['sensor_id'].'\', to_date(\''.$_POST['date_created'].'\',
-			\'dd/mm/yyyy HH24:Mi:SS\'), \''.$_POST['description'].'\', empty_blob()) 
+			\'dd/mm/yyyy HH24:Mi:SS\'), \''.$_POST['length'].'\', \''.$_POST['description'].'\' empty_blob()) 
 			RETURNING recorded_data INTO :recorded_data';
 
 		$stid = oci_parse($conn, $sql);
@@ -111,7 +111,7 @@ else if(isset($_POST['sensor_id']) && isset($_POST['recording_id'])) //&& isset(
 				//echo '<br/>';
 				//printf('<img src="data:audio/jog;base64,%s"/>', base64_encode($thumb));
 				//echo '<br/><br/>';
-				printf('<img src="data:audio/jog;base64,%s"/>', base64_encode($audio));
+				//printf('<img src="data:audio/jog;base64,%s"/>', base64_encode($audio));
 			}
 		}
 		oci_free_statement($stid);

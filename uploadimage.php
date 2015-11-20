@@ -1,14 +1,6 @@
 <?php
 //Uploads image then put the image into the 
 
-/*
-CHECKLIST TO BE DELETED --------------------------------------------------------------------------------------
-- Check for proper input/duplicates
-- Fix echos and other chekcs
-- Make thumbnail
-- redirect and allow to view image? figure out how to view image?
-
-*/
 //Much of this code is from http://www.w3schools.com/php/php_file_upload.asp
 include("PHPconnectionDB.php");
 
