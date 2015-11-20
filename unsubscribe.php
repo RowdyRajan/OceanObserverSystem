@@ -2,9 +2,9 @@
  <body>
  <?php
 	include("PHPconnectionDB.php");
-	if(isset($_POST['sensor_id'])){
+	if(isset($_POST['sensor_id']) && isset($_COOKIE['Person']) && $_COOKIE['Status'] == "LoggedIn"){
 		$sensor_id=$_POST['sensor_id'];
-		$person_id=2; //NEED TO GET THE ID OF THE PERSON LOGGED ON!
+		$person_id=$_COOKIE['Person'];
 	$conn=connect();
 
 	$sql = 'DELETE FROM subscriptions WHERE (sensor_id = \''.$sensor_id.'\' and person_id = \''.$person_id.'\')';
@@ -30,6 +30,9 @@
 	header("Location:scientist.php");
 	exit();
 	}
+	else{
+		header("Location:index.php");		 
+	} 
 	?>
  </body>
 </html> 
