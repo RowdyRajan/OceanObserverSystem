@@ -20,6 +20,9 @@ header("Location:index.php");
 		#divUploadImage{
 			display: None;
 		}
+		#divUploadAudio{
+			display: None;
+		}
 		#divChangePassword{
 			display: None;
 		}
@@ -47,6 +50,7 @@ header("Location:index.php");
   <div id="tabs-1">
    	<h3 class="subheaders">Upload Data to the Server</h3>
   	<button id="btnUploadImage"> Upload Image</button>
+  	<button id="btnUploadAudio"> Upload Audio</button>
 	<div id="divUploadImage">
 		<?php echo '<h3>Uploading Image:</h3>';
 		echo '<form enctype="multipart/form-data" name = "uploadimage" method = "post" action = "uploadimage.php">';
@@ -55,8 +59,19 @@ header("Location:index.php");
 		echo 'Date Created (dd/mm/yyyy hours(24):minutes:seconds): <input type="date" name="date_created" size="20" 
 			value = "'.date('d/m/Y').' '.date('H:i:s').'"/><br/>';
 		echo 'Description: <input type="text" name="description" maxlength="128" size="64"/><br/>';
-		echo 'File: <input type="file" name="imageFile" accept=".jpg" id="imageFile"/><br/>';
+		echo 'File: <input type="file" name="imageFile" accept=".jpg" id="imageFile" required = "true"/><br/>';
 		echo '<input type = "submit" name ="imageSubmit" value = "Submit Image"/></form>'; ?>
+	</div>
+	<div id="divUploadAudio">
+		<?php echo '<h3>Uploading Audio:</h3>';
+		echo '<form enctype="multipart/form-data" name = "uploadaudio" method = "post" action = "uploadaudio.php">';
+		echo 'Recording ID: <input type="number" name="recording_id" pattern="[0-9]" required="true"/><br/>';
+		echo 'Sensor ID: <input type="number" name="sensor_id" pattern="[0-9]" required="true"/><br/>';
+		echo 'Date Created (dd/mm/yyyy hours(24):minutes:seconds): <input type="date" name="date_created" size="20" 
+			value = "'.date('d/m/Y').' '.date('H:i:s').'"/><br/>';
+		echo 'Description: <input type="text" name="description" maxlength="128" size="64"/><br/>';
+		echo 'File: <input type="file" name="audioFile" accept=".wav" id="audioFile" required = "true"/><br/>';
+		echo '<input type = "submit" name ="audioSubmit" value = "Submit Audio"/></form>'; ?>
 	</div>
   </div>
   <div id="tabs-2">
@@ -104,14 +119,29 @@ header("Location:index.php");
 		
 	//Handling Upload
 	var image = false;
+	var audio = false;
 	$("#btnUploadImage").click(function () {
 		if(image == true){
 			$("#divUploadImage").fadeOut('fast');
 			image = false;
-		}else{
-			$("#divUploadImage").fadeIn();
-			image = true;
+		}else if(audio == true){
+			$("#divUploadAudio").fadeOut('fast');
+			audio = false;
 		}
+		$("#divUploadImage").fadeIn();
+		image = true;
+	});
+	$("#btnUploadAudio").click(function () {
+		if(audio == true){
+			$("#divUploadAudio").fadeOut('fast');
+			audio = false;
+		}else if(image == true){
+			$("#divUploadImage").fadeOut('fast');
+			image = false;
+		}
+		$("#divUploadAudio").fadeIn();
+		audio = true;
+		
 	});
 	
   	//Handling Personal Info Change
