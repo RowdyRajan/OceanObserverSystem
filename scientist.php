@@ -122,7 +122,21 @@ header("Location:index.php");
 
   </div>
   <div id="tabs-2">
-   	Search goes here!
+   <h3 class="subheaders"> Search Sensor Data</h3>
+   <div id="divSearchFields">
+   <form name = "searchsensor" method = post action = "searchsensors.php">
+  		Keywords: <input type="text" name="fields" value ="." /><br/>
+ 		Sensor types:<select name = "type">
+   		<option value="all">All</option>
+   		<option value="audio">Audio Recordings</option>
+   		<option value="images">Images</option>
+   		<option value="scalar">Scalar Data</option>
+   	</select> <br/>
+   	Location: <input type ="input" name="location" value="." /> <br/>
+   	Start Date of Records: <input type="date" name="startdate" value ="2000-01-01" /> <br/>
+   	End Date of Records: <input type="date" name="enddate" value = <?php echo date("Y-m-d") ?> /> <br/>
+   	<input type = "submit" name ="search" value = "Search Records" /></form>
+   </div>
   </div>
   <div id="tabs-3">
     Data analysis report generating go here!
@@ -199,6 +213,6 @@ header("Location:index.php");
 			Personal = true; 		
   		}
   	});
-  	</script>
+ </script>
 </body>
 </html>
