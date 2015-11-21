@@ -4,7 +4,7 @@ include	("PHPconnectionDB.php");
 if(isset($_COOKIE['Status']) && $_COOKIE['Status'] == "LoggedIn" && $_COOKIE["Role"] == 's'){	 }
 else{
 header("Location:index.php");		 
-} 
+}  
 ?>
 
 <head>
@@ -21,6 +21,10 @@ header("Location:index.php");
 			$location	= $_POST['location'];
 			$startdate	= $_POST['startdate'];
 			$enddate		= $_POST['enddate'];
+			
+			if($keywords == ""){
+				$keywordStrings = 
+			}
 			
 			$conn = connect();
 			if($_POST['fields'] =="audio"){
