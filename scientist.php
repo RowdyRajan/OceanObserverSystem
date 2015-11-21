@@ -130,10 +130,13 @@ header("Location:index.php");
    		<option value="images">Images</option>
    		<option value="scalar">Scalar Data</option>
    	</select> <br/>
-   	Location: <input type ="input" name="location" value="." /> <br/>
-   	Start Date of Records: <input type="date" name="startdate" value ="2000-01-01" /> <br/>
-   	End Date of Records: <input type="date" name="enddate" value = <?php echo date("Y-m-d") ?> /> <br/>
+   	Location: <input type ="input" name="location"/> <br/>
+   	<br/>
+   	(Input dates in the form d/m/yyyy Hours:minutes:seconds) <br/>
+   	Start Date of Records: <input type="date" name="startdate" value ="20/09/2014 22:10:26" /> <br/>
+   	End Date of Records: <input type="date" name="enddate" value = '<?php echo date("d/m/Y H:i:s");  ?>' /> <br/>
    	<input type = "submit" name ="search" value = "Search Records" /></form>
+  
    </div>
   </div>
   <div id="tabs-3">
