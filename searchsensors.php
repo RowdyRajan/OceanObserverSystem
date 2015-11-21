@@ -107,6 +107,51 @@ header("Location:index.php");
 		 		
 		 	
 <?php
+			} elseif($type == "scalar"){
+				
+			 $sql = "Select S.sensor_id, S.location, S.description, SC.id, SC.date_created, SC.value
+			 			FROM sensors S, scalar_data SC, subscriptions U 
+			 			WHERE	U.person_id =".$_COOKIE['Person']." 
+			 			AND S.sensor_type = 's'
+			 			AND U.sensor_id = S.sensor_id
+						AND SC.sensor_id = S.sensor_id
+						AND (SC.date_created BETWEEN to_date('".$startDate."', 'DD/MM/YYYY HH24:MI:SS') AND to_date('".$endDate."', 'DD/MM/YYYY HH24:MI:SS'))
+						".$locationParam;
+				echo $sql;
+				
+				$conn = connect();
+				$stid = oci_parse($conn, $sql);
+				$res = oci_execute($stid, OCI_DEFAULT);
+				if (!$res) {
+					$err = oci_error($stid);
+					//header('scientist.php?error=general&place=audio');
+		 			//exit;
+		 		}
+		 	
+		 ?>
+		<TABLE BORDER = 2>
+		<TR>
+		<TH>Sensor ID</TH>
+		<TH>Location</TH>
+		<TH>Sensor Description</TH>
+		<TH>Scalar Data ID</TH>
+		<TH>Date Scalar Data Created</TH>
+		<TH>Value</TH>
+		</TR>
+		<?php
+			while ($row = oci_fetch_array($stid, OCI_NUM)){ ?>
+			<TD> <?php echo $row[0]; ?> </TD>
+			<TD> <?php echo $row[1];?> </TD>
+			<TD> <?php echo $row[2];?> </TD>
+			<TD> <?php echo $row[3];?> </TD>
+			<TD> <?php echo $row[4];?> </TD>
+			<TD> <?php echo $row[5];?> </TD>	
+			<?php } ?>
+		</TR>
+		</TABLE>	
+		 		
+		 	
+<?php
 			} elseif($type == "images"){
 				if($keywords == ""){
 					$keywordParam = ""; 
@@ -124,7 +169,7 @@ header("Location:index.php");
 						AND I.sensor_id = S.sensor_id
 						AND (I.date_created BETWEEN to_date('".$startDate."', 'DD/MM/YYYY HH24:MI:SS') AND to_date('".$endDate."', 'DD/MM/YYYY HH24:MI:SS'))
 						".$locationParam.$keywordParam;
-				echo $sql;
+				
 				
 				$conn = connect();
 				$stid = oci_parse($conn, $sql);
@@ -165,7 +210,9 @@ header("Location:index.php");
 <?php
 			} 
 		}
-?>			
+?>		
+		
+		
 		
 			
 			
