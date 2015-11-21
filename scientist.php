@@ -1,7 +1,7 @@
 <html>
 <?php
 include	("PHPconnectionDB.php");
-if(isset($_COOKIE['Status']) && $_COOKIE['Status'] == "LoggedIn" && $_COOKIE["Role"] == 's' ){	 }
+if(isset($_COOKIE['Status']) && isset($_COOKIE['Person']) && $_COOKIE['Status'] == "LoggedIn" && $_COOKIE["Role"] == 's' ){	 }
 else{
 header("Location:index.php");		 
 } 
@@ -53,13 +53,11 @@ header("Location:index.php");
 			   $conn=connect();
 
 			   $sql = null;	
-			   if ($table == 1){
-				   //NEED TO USE THE PERSON_ID OF THE LOGGED IN USER
-					$sql = 'SELECT * FROM sensors WHERE sensor_id IN(SELECT sensor_id FROM subscriptions WHERE person_id = 2)';
+			   if ($table == 1){		   
+					$sql = 'SELECT * FROM sensors WHERE sensor_id IN(SELECT sensor_id FROM subscriptions WHERE person_id = '.$_COOKIE['Person'].')';
 				//the second table shows the unscribed sensors
 			   } elseif ($table == 2){
-			   //NEED TO USE THE PERSON_ID OF THE LOGGED IN USER
-					$sql = 'SELECT * FROM sensors WHERE sensor_id NOT IN(SELECT sensor_id FROM subscriptions WHERE person_id = 2)';
+					$sql = 'SELECT * FROM sensors WHERE sensor_id NOT IN(SELECT sensor_id FROM subscriptions WHERE person_id = '.$_COOKIE['Person'].')';
 			   }
 			   
 			   //Prepare sql using conn and returns the statement identifier
