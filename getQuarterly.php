@@ -49,7 +49,11 @@
 						<tr>
 		 				<TD> <?php echo $row['SENSOR_ID'];  ?> </TD>
 						<TD> <?php echo $row['LOCATION']; ?> </TD>
-						<TD> <?php echo $row['YEAR']; ?> </TD>
+						<TD> <?php echo '<form name = "getQuarterly" method ="post" action="getQuarterly.php">
+							<input type="hidden" name="sensor" value="' . $row['SENSOR_ID'] . '" />
+							<input type="hidden" name="year" value="' . $row['YEAR'] . '" />
+							<input type = "submit" name="getQuarterly" value="' . $row['YEAR'] . '"/>
+							</form>'; ?> </TD>
 						<TD> <?php echo '<form name = "getMonthly" method ="post" action="getMonthly.php">
 							<input type="hidden" name="sensor" value="' . $row['SENSOR_ID'] . '" />
 							<input type="hidden" name="year" value="' . $row['YEAR'] . '" />
@@ -63,6 +67,9 @@
 						<?php 
 	    				} ?>
 				</TABLE>
+				<a href="index.php">
+   				<input type="button" value="Return to Userpage" />
+				</a>
 			<?php } ?>
 	</div>
 </html>

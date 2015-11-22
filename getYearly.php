@@ -59,6 +59,9 @@
 						<?php 
 	    				} ?>
 				</TABLE>
+				<a href="index.php">
+   				<input type="button" value="Return to Userpage" />
+				</a>
 			<?php } ?>
 	</div>
 </html>
