@@ -423,13 +423,5 @@ function showDownload($id, $ext){
 }		
 ?>		
 		
-		
-		
-			
-			
-
-
-
-
 </body>
 </html>

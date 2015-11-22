@@ -3,7 +3,8 @@
 		<?php
 			include("PHPconnectionDB.php");
 			if(isset($_POST['changeperson'])){
-				$person=$_COOKIE['Person'];
+				if($_POST['fromDash'] == '1'){$person = $_POST['id'];}				
+				else{$person=$_COOKIE['Person'];}
 				$fname=$_POST['fname'];
 				$lname=$_POST['lname'];
 				$addr=$_POST['addr'];
