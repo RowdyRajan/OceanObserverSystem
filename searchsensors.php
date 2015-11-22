@@ -197,7 +197,7 @@ header("Location:index.php");
 
 
 		
-			while ($row = oci_fetch_array($stid, OCI_NUM + OCI_RETURN_LOBS)){ ?>
+			while ($row = oci_fetch_array($stid, OCI_NUM +OCI_RETURN_NULLS+OCI_RETURN_LOBS)){ ?>
 			<tr>
 
 
@@ -326,7 +326,7 @@ header("Location:index.php");
 
 
 		
-			while ($row = oci_fetch_array($stid, OCI_NUM)){ ?>
+			while ($row = oci_fetch_array($stid, OCI_NUM+OCI_RETURN_NULLS+OCI_RETURN_LOBS)){ ?>
 			<tr>
 
 
