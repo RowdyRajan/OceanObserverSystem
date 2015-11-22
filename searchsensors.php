@@ -316,13 +316,13 @@ header("Location:index.php");
 		<TH>Sensor Description</TH>
 		<TH>Image ID</TH>
 		<TH>Image Description</TH>
-		<TH>Date Image Created</TH>
+		
 		
 		
 		</TR>
 		
 		<?php
-			while ($row = oci_fetch_array($stid, OCI_NUM)){ ?>
+			while ($row = oci_fetch_array($stid, OCI_NUM + OCI_RETURN_LOBS)){ ?>
 			<tr>
 			<TD> <?php echo $row[0]; ?> </TD>
 			<TD> <?php echo $row[1];?> </TD>
@@ -330,6 +330,7 @@ header("Location:index.php");
 			<TD> <?php echo $row[3];?> </TD>
 			<TD> <?php echo $row[4];?> </TD>
 			<TD> <?php echo $row[5];?> </TD>
+			
 			</tr>
 			<?php } ?>
 			
@@ -370,10 +371,11 @@ header("Location:index.php");
 		<TH>Audio Description</TH>
 		<TH>Audio Length</TH>
 		<TH>Audio Date Created</TH>
+		<TH>Audio data</TH>
 		
 		</TR>
 		<?php
-			while ($row3 = oci_fetch_array($stid3, OCI_NUM)){ ?>
+			while ($row3 = oci_fetch_array($stid3, OCI_NUM + OCI_RETURN_LOBS)){ ?>
 			<tr>
 			<TD> <?php echo $row3[0]; ?> </TD>
 			<TD> <?php echo $row3[1];?> </TD>
@@ -382,6 +384,10 @@ header("Location:index.php");
 			<TD> <?php echo $row3[4];?> </TD>
 			<TD> <?php echo $row3[5];?> </TD>
 			<TD> <?php echo $row3[6];?> </TD>
+			<TD> <?php echo $row3[7];
+			$fh = fopen("tmp/test.wav", 'w');
+			fwrite($fh,$row3[7]) ;
+			fclose($fh);			?> </TD>
 			
 			</tr>	
 			<?php } ?>
