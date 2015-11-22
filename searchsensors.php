@@ -7,7 +7,6 @@ header("Location:index.php");
 }  
 ?>
 
-
 <head>
 	<title>Search Results</title>
 </head>
@@ -24,6 +23,8 @@ header("Location:index.php");
 			$location	= $_POST['location'];
 			$startDate	= $_POST['startdate'];
 			$endDate		= $_POST['enddate'];
+			
+			$scalars = array();
 			
 			if($keywords == ""){
 				$keywordParam = ""; 
@@ -47,7 +48,7 @@ header("Location:index.php");
 					$keywordParam = " AND (S.description = '".$keywords."' OR ".$typeKeywords.")";  			
 				}
 				
-			 $sql = "Select S.sensor_id, S.location, S.description, A.recording_id, A.description, A.length, A.date_created, A.recorded_data
+			 $sql = "Select S.sensor_id, S.location, S.description, A.recording_id, A.description, A.length, to_char(A.date_created, 'dd/mm/yyyy hh24:mi:ss') datetime, A.recorded_data
 			 			FROM sensors S, audio_recordings A, subscriptions U 
 			 			WHERE	U.person_id =".$_COOKIE['Person']." 
 			 			AND S.sensor_type = 'a'
@@ -76,6 +77,7 @@ header("Location:index.php");
 		<TH>Audio Description</TH>
 		<TH>Audio Length</TH>
 		<TH>Audio Date Created</TH>
+		<TH>Recorded Data</TH>
 		</TR>
 		<?php
 			while ($row = oci_fetch_array($stid, OCI_NUM)){ ?>
@@ -87,7 +89,9 @@ header("Location:index.php");
 			<TD> <?php echo $row[4];?> </TD>
 			<TD> <?php echo $row[5];?> </TD>
 			<TD> <?php echo $row[6];?> </TD>
-			
+			<TD> <?php 
+				showDownload($row[3], 'wav'); 
+			?> </TD>
 			</tr>
 			<?php } ?>
 		
@@ -96,8 +100,9 @@ header("Location:index.php");
 		 	
 <?php
 			} elseif($type == "scalar"){
-				
-			 $sql = "Select S.sensor_id, S.location, S.description, SC.id, SC.date_created, SC.value
+			
+			//code for formating date stolen form https://community.oracle.com/thread/312115?start=0&tstart=0
+			 $sql = "Select S.sensor_id, S.location, S.description, SC.id, to_char(SC.date_created, 'dd/mm/yyyy hh24:mi:ss') datetime, SC.value
 			 			FROM sensors S, scalar_data SC, subscriptions U 
 			 			WHERE	U.person_id =".$_COOKIE['Person']." 
 			 			AND S.sensor_type = 's'
@@ -105,7 +110,7 @@ header("Location:index.php");
 						AND SC.sensor_id = S.sensor_id
 						AND (SC.date_created BETWEEN to_date('".$startDate."', 'DD/MM/YYYY HH24:MI:SS') AND to_date('".$endDate."', 'DD/MM/YYYY HH24:MI:SS'))
 						".$locationParam;
-				echo $sql;
+				//echo $sql;
 				
 				$conn = connect();
 				$stid = oci_parse($conn, $sql);
@@ -125,21 +130,32 @@ header("Location:index.php");
 		<TH>Scalar Data ID</TH>
 		<TH>Date Scalar Data Created</TH>
 		<TH>Value</TH>
+		<TH>CSV</TH>
 		</TR>
 		<?php
-			while ($row = oci_fetch_array($stid, OCI_NUM)){ ?>
+			while ($row = oci_fetch_array($stid, OCI_NUM)){ 
+			$scalars[$row[3]] = ''.$row[0].','.$row[4].','.$row[5].'';
+			?>
 			<tr>
 			<TD> <?php echo $row[0]; ?> </TD>
 			<TD> <?php echo $row[1];?> </TD>
 			<TD> <?php echo $row[2];?> </TD>
 			<TD> <?php echo $row[3];?> </TD>
 			<TD> <?php echo $row[4];?> </TD>
-			<TD> <?php echo $row[5];?> </TD>	
+			<TD> <?php echo $row[5];?> </TD>
+			<TD> <?php 	echo '<form name = "download_scalar" method ="post" action="downloadscalars.php">
+									<input type="hidden" name="scalars" value="'.$scalars[$row[3]].'" />	
+									<input type = "submit" value="Downaload"/>
+									</form>'; ?>
 			</tr>
 			<?php } ?>
 		
-		</TABLE>	
-		 		
+		</TABLE>
+		<?php 		
+		echo '<form name = "download_scalar" method ="post" action="downloadscalars.php">
+									<input type="hidden" name="scalars" value="'.implode("_", $scalars).'" />	
+									<input type = "submit" value="Downaload All Scalars"/>
+									</form>'; ?>		
 		 	
 <?php
 			} elseif($type == "images"){
@@ -151,7 +167,7 @@ header("Location:index.php");
 					$keywordParam = " AND (S.description = '".$keywords."' OR ".$typeKeywords.")";  			
 				}
 				
-			 $sql = "Select S.sensor_id, S.location, S.description, I.image_id, I.description, I.date_created, I.thumbnail, I.recorded_data
+			 $sql = "Select S.sensor_id, S.location, S.description, I.image_id, I.description, to_char(I.date_created, 'dd/mm/yyyy hh24:mi:ss') datetime, I.thumbnail
 			 			FROM sensors S, images I, subscriptions U 
 			 			WHERE	U.person_id =".$_COOKIE['Person']." 
 			 			AND S.sensor_type = 'i'
@@ -179,18 +195,26 @@ header("Location:index.php");
 		<TH>Image ID</TH>
 		<TH>Image Description</TH>
 		<TH>Date Image Created</TH>
+		<TH>Thumbnail</TH>
+		<TH>Recorded Data</TH>
 		</TR>
 		
 		<?php
 		
-			while ($row = oci_fetch_array($stid, OCI_NUM)){ ?>
+			while ($row = oci_fetch_array($stid, OCI_NUM+OCI_RETURN_NULLS+OCI_RETURN_LOBS)){ ?>
 			<tr>
-			<TD> <?php echo $row[0]; ?> </TD>
+			<TD> <?php echo $row[0];?> </TD>
 			<TD> <?php echo $row[1];?> </TD>
 			<TD> <?php echo $row[2];?> </TD>
 			<TD> <?php echo $row[3];?> </TD>
 			<TD> <?php echo $row[4];?> </TD>
 			<TD> <?php echo $row[5];?> </TD>
+			<TD> <?php printf('<img src="data:image/jog;base64,%s"/>', base64_encode($row[6]));?> </TD>
+			<TD> <?php 
+				if($row[6] != NULL){
+					showDownload($row[3], 'jpg'); 
+				}
+			?> </TD>
 			</tr>
 			<?php } ?>
 	
@@ -209,7 +233,7 @@ header("Location:index.php");
 					$keywordParam = " AND (S.description = '".$keywords."' OR ".$typeKeywords.")";  			
 				}
 				
-			 $sql = "Select S.sensor_id, S.location, S.description, I.image_id, I.description, I.date_created, I.thumbnail, I.recorded_data
+			 $sql = "Select S.sensor_id, S.location, S.description, I.image_id, I.description, to_char(I.date_created, 'dd/mm/yyyy hh24:mi:ss') datetime, I.thumbnail, I.recorded_data
 			 			FROM sensors S, images I, subscriptions U 
 			 			WHERE	U.person_id =".$_COOKIE['Person']." 
 			 			AND S.sensor_type = 'i'
@@ -227,7 +251,7 @@ header("Location:index.php");
 					//header('scientist.php?error=general&place=audio');
 		 			//exit;
 		 		}
-		 	$sql2 = "Select S.sensor_id, S.location, S.description, SC.id, SC.date_created, SC.value
+		 	$sql2 = "Select S.sensor_id, S.location, S.description, SC.id, to_char(SC.date_created, 'dd/mm/yyyy hh24:mi:ss') datetime, SC.value
 			 			FROM sensors S, scalar_data SC, subscriptions U 
 			 			WHERE	U.person_id =".$_COOKIE['Person']." 
 			 			AND S.sensor_type = 's'
@@ -254,7 +278,7 @@ header("Location:index.php");
 					$keywordParam = " AND (S.description = '".$keywords."' OR ".$typeKeywords.")";  			
 				}
 				
-			 $sql3 = "Select S.sensor_id, S.location, S.description, A.recording_id, A.description, A.length, A.date_created, A.recorded_data
+			 $sql3 = "Select S.sensor_id, S.location, S.description, A.recording_id, A.description, A.length, to_char(A.date_created, 'dd/mm/yyyy hh24:mi:ss') datetime
 			 			FROM sensors S, audio_recordings A, subscriptions U 
 			 			WHERE	U.person_id =".$_COOKIE['Person']." 
 			 			AND S.sensor_type = 'a'
@@ -286,12 +310,13 @@ header("Location:index.php");
 		<TH>Image ID</TH>
 		<TH>Image Description</TH>
 		<TH>Date Image Created</TH>
-		
+		<TH>Thumbnail</TH>
+		<TH>Recorded Data</TH>
 		
 		</TR>
 		
 		<?php
-			while ($row = oci_fetch_array($stid, OCI_NUM)){ ?>
+			while ($row = oci_fetch_array($stid, OCI_NUM+OCI_RETURN_NULLS+OCI_RETURN_LOBS)){ ?>
 			<tr>
 			<TD> <?php echo $row[0]; ?> </TD>
 			<TD> <?php echo $row[1];?> </TD>
@@ -299,6 +324,12 @@ header("Location:index.php");
 			<TD> <?php echo $row[3];?> </TD>
 			<TD> <?php echo $row[4];?> </TD>
 			<TD> <?php echo $row[5];?> </TD>
+			<TD> <?php printf('<img src="data:image/jog;base64,%s"/>', base64_encode($row[6]));?> </TD>
+			<TD> <?php 
+				if($row[6] != NULL){
+					showDownload($row[3], 'jpg'); 
+				}
+			?> </TD>
 			</tr>
 			<?php } ?>
 			
@@ -314,9 +345,12 @@ header("Location:index.php");
 		<TH>Scalar Data ID</TH>
 		<TH>Date Scalar Data Created</TH>
 		<TH>Value</TH>
+		<TH>CSV</TH>
 		</TR>
 		<?php
-			while ($row2 = oci_fetch_array($stid2, OCI_NUM)){ ?>
+			while ($row2 = oci_fetch_array($stid2, OCI_NUM)){ 
+			$scalars[$row2[3]] = ''.$row2[0].','.$row2[4].','.$row2[5].'';
+			?>
 			<tr>
 			<TD> <?php echo $row2[0]; ?> </TD>
 			<TD> <?php echo $row2[1];?> </TD>
@@ -324,13 +358,25 @@ header("Location:index.php");
 			<TD> <?php echo $row2[3];?> </TD>
 			<TD> <?php echo $row2[4];?> </TD>
 			<TD> <?php echo $row2[5];?> </TD>
-			</tr>	
+			<TD> <?php 	echo '<form name = "download_scalar" method ="post" action="downloadscalars.php">
+									<input type="hidden" name="scalars" value="'.$scalars[$row2[3]].'" />	
+									<input type = "submit" value="Downaload"/>
+									</form>'; ?>
+			</tr>
 			<?php } ?>
+		
+		</TABLE>
+		<?php 		
+		echo '<form name = "download_scalar" method ="post" action="downloadscalars.php">
+									<input type="hidden" name="scalars" value="'.implode("_", $scalars).'" />	
+									<input type = "submit" value="Downaload All Scalars"/>
+									</form>'; ?>		
+		 	
 	
 	</TABLE>
 	
 	<h3> Audio Data </h3>
-	<TABLE BORDER = 2>
+		<TABLE BORDER = 2>
 		<TR>
 		<TH>Sensor ID</TH>
 		<TH>Location</TH>
@@ -339,20 +385,22 @@ header("Location:index.php");
 		<TH>Audio Description</TH>
 		<TH>Audio Length</TH>
 		<TH>Audio Date Created</TH>
-		
+		<TH>Recorded Data</TH>
 		</TR>
 		<?php
 			while ($row3 = oci_fetch_array($stid3, OCI_NUM)){ ?>
 			<tr>
-			<TD> <?php echo $row3[0]; ?> </TD>
+			<TD> <?php echo $row3[0];?> </TD>
 			<TD> <?php echo $row3[1];?> </TD>
 			<TD> <?php echo $row3[2];?> </TD>
 			<TD> <?php echo $row3[3];?> </TD>
 			<TD> <?php echo $row3[4];?> </TD>
 			<TD> <?php echo $row3[5];?> </TD>
 			<TD> <?php echo $row3[6];?> </TD>
-			
-			</tr>	
+			<TD> <?php 
+				showDownload($row3[3], 'wav'); 
+			?> </TD>
+			</tr>
 			<?php } ?>
 		
 		</TABLE>		
@@ -365,7 +413,14 @@ header("Location:index.php");
 <?php
 			} 
 		} 
-		
+function showDownload($id, $ext){
+	echo '<form name = "download" method ="post" action="download.php">
+			<input type="hidden" name="id" value="'.(int)$id.'" />	
+			<input type="hidden" name="data" value="'.$data.'" />
+			<input type="hidden" name="ext" value="'.$ext.'" />
+			<input type = "submit" value="Downaload"/>
+			</form>';
+}		
 ?>		
 		
 		
