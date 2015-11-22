@@ -95,8 +95,11 @@ header("Location:index.php");
 			<TD> <?php 
 				//print $lob->load();
 				//browser promts to save or open the file
-			showDownload($row[7], $row[3], 'wav'); 
-			?> </TD> </tr>
+
+			if($row[7] != NULL){
+				showDownload($row[3], 'wav'); 
+			}
+			?> </TD></TR>
 
 			<?php } ?>
 		
@@ -192,9 +195,11 @@ header("Location:index.php");
 		
 		<?php
 
+
 		
-			while ($row = oci_fetch_array($stid, OCI_NUM)){ ?>
+			while ($row = oci_fetch_array($stid, OCI_NUM + OCI_RETURN_LOBS)){ ?>
 			<tr>
+
 
 			<TD> <?php echo $row[0]; ?> </TD>
 			<TD> <?php echo $row[1];?> </TD>
@@ -216,11 +221,9 @@ header("Location:index.php");
 
 			
 			<TD> <?php 
-			//header('Content-disposition: attachment;filename='.$_GET['name']);		
-			//$lob = $row[7]->load();
-         //$row[7]->free();	
-			//echo $row[7];
-			showDownload($row[7], $row[3], 'jpg'); 
+			if($row[7] != NULL){
+				showDownload($row[3], 'jpg'); 
+			}
 			?> </TD></TR>
 
 			<?php } ?>
@@ -316,50 +319,45 @@ header("Location:index.php");
 		<TH>Sensor Description</TH>
 		<TH>Image ID</TH>
 		<TH>Image Description</TH>
-		
-		
-		
+		<TH>Date Image Created</TH>
 		</TR>
 		
 		<?php
-			while ($row = oci_fetch_array($stid, OCI_NUM + OCI_RETURN_LOBS)){ ?>
+
+
+		
+			while ($row = oci_fetch_array($stid, OCI_NUM)){ ?>
 			<tr>
+
+
 			<TD> <?php echo $row[0]; ?> </TD>
 			<TD> <?php echo $row[1];?> </TD>
 			<TD> <?php echo $row[2];?> </TD>
 			<TD> <?php echo $row[3];?> </TD>
 			<TD> <?php echo $row[4];?> </TD>
 			<TD> <?php echo $row[5];?> </TD>
-			
-			</tr>
-			<?php } ?>
-			
+
 		
-		</TABLE>
-		
-		<h3>Scalar Data</h3>
-		<TABLE BORDER = 2>
-		<TR>
-		<TH>Sensor ID</TH>
-		<TH>Location</TH>
-		<TH>Sensor Description</TH>
-		<TH>Scalar Data ID</TH>
-		<TH>Date Scalar Data Created</TH>
-		<TH>Value</TH>
-		</TR>
-		<?php
-			while ($row2 = oci_fetch_array($stid2, OCI_NUM)){ ?>
-			<tr>
-			<TD> <?php echo $row2[0]; ?> </TD>
-			<TD> <?php echo $row2[1];?> </TD>
-			<TD> <?php echo $row2[2];?> </TD>
-			<TD> <?php echo $row2[3];?> </TD>
-			<TD> <?php echo $row2[4];?> </TD>
-			<TD> <?php echo $row2[5];?> </TD>
-			</tr>	
+
+			<TD> <?php 
+			//printf('<img src="data:image/jog;base64,%s"/>', base64_encode(file_get_contents($row[6])));echo 'THUMBNAIL!'; echo $row[6]; echo 'this is the thumbnail';
+			//header('Content-disposition: attachment;filename='.$_GET['name']);
+
+          $lob = $row[6];
+          //$row[6]->free();
+          printf('<img src="data:image/jog;base64,%s"/>', base64_encode($lob));		
+			?> </TD>
+
+			
+			<TD> <?php 
+			if($row[7] != NULL){
+				showDownload($row[3], 'jpg'); 
+			}
+			?> </TD></TR>
+
 			<?php } ?>
 	
-	</TABLE>
+		</TABLE>	
 	
 	<h3> Audio Data </h3>
 	<TABLE BORDER = 2>
@@ -371,12 +369,12 @@ header("Location:index.php");
 		<TH>Audio Description</TH>
 		<TH>Audio Length</TH>
 		<TH>Audio Date Created</TH>
-		<TH>Audio data</TH>
-		
 		</TR>
 		<?php
-			while ($row3 = oci_fetch_array($stid3, OCI_NUM + OCI_RETURN_LOBS)){ ?>
+
+			while ($row3 = oci_fetch_array($stid3, OCI_NUM)){ ?>
 			<tr>
+
 			<TD> <?php echo $row3[0]; ?> </TD>
 			<TD> <?php echo $row3[1];?> </TD>
 			<TD> <?php echo $row3[2];?> </TD>
@@ -384,12 +382,18 @@ header("Location:index.php");
 			<TD> <?php echo $row3[4];?> </TD>
 			<TD> <?php echo $row3[5];?> </TD>
 			<TD> <?php echo $row3[6];?> </TD>
-			<TD> <?php echo $row3[7];
-			$fh = fopen("tmp/test.wav", 'w');
-			fwrite($fh,$row3[7]) ;
-			fclose($fh);			?> </TD>
+
 			
-			</tr>	
+
+			<TD> <?php 
+				//print $lob->load();
+				//browser promts to save or open the file
+
+			if($row3[7] != NULL){
+				showDownload($row3[3], 'wav'); 
+			}
+			?> </TD></TR>
+
 			<?php } ?>
 		
 		</TABLE>		
@@ -404,15 +408,13 @@ header("Location:index.php");
 
 		}
 		
-function showDownload($data, $id, $ext){
-	if($data != NULL){
-     	echo '<form name = "download" method ="post" action="download.php">
-				<input type="hidden" name="id" value="'.(int)$id.'" />
-				<input type="hidden" name="data" value="'.$data.'" />
-				<input type="hidden" name="ext" value="'.$ext.'" />
-				<input type = "submit" value="Downaload"/>
-				</form>';
-	}
+function showDownload($id, $ext){
+	echo '<form name = "download" method ="post" action="download.php">
+			<input type="hidden" name="id" value="'.(int)$id.'" />	
+			<input type="hidden" name="data" value="'.$data.'" />
+			<input type="hidden" name="ext" value="'.$ext.'" />
+			<input type = "submit" value="Downaload"/>
+			</form>';
 }
 
 ?>		
