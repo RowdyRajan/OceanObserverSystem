@@ -14,9 +14,6 @@
 	<body>
 		<?php
 			include("PHPconnectionDB.php");
-			
-			
-
 			if(isset($_POST['confirm'])){
 				$username=$_POST['username'];
 				$password=$_POST['password'];	
