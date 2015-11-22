@@ -4,13 +4,6 @@
 		$id = $_POST['id'];
 		$type = $_POST['type'];
 		$ext = $_POST['ext'];
-		//echo $data;
-		//file_put_contents('temp'."/h".$id, base64_encode($data));
-		//$data = base64_decode($data);
-		//echo 'this is data'.$data.'';
-		//printf('<img src="data:image/jog;base64,%s"/>', base64_encode($data));	
-		//$image = imagecreatefromstring($data); 
-		//file_put_contents('temp'."/h".$id.$ext, $im);
 		$conn=connect();
 		$sql = NULL;
 		if($ext == 'jpg'){
@@ -29,13 +22,17 @@
 		// Free the statement identifier when closing the connection
 		oci_free_statement($stid);
 		oci_close($conn);
-		//$data = $row[0];
-		$im = imagecreatefromstring($row[0]);
-		//$im = $row[7];
-		//imagejpeg($im, 'temp/COMPLEXTEST'.$row[3].'.jpg')
-		ob_start();
-    	imagejpeg($im);
-    	$imageData = ob_get_clean();
+		
+		if($ext == 'jpg'){
+			$im = imagecreatefromstring($row[0]);
+			ob_start();
+    		imagejpeg($im);
+    		$data = ob_get_clean();
+    	}
+    	else if($ext == 'wav'){
+    		//get audio to work
+    		$data = row[0];
+    	}
     	ob_clean();
 		//$size = strlen($im);
 		header('Content-Description: File Transfer');
@@ -48,7 +45,7 @@
     	//header('Content-Length: ' . size);
     	//echo $data;
     	//imagejpeg($im);
-		print($imageData);
+		print($data);
 		//header("Location:searchsensors.php");
 		//exit();	
 	}

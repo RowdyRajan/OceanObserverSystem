@@ -103,7 +103,9 @@ header("Location:index.php");
 			<TD> <?php 
 				//print $lob->load();
 				//browser promts to save or open the file
-			showDownload($row[7], $row[3], 'wav'); 
+			if($row[7] != NULL){
+				showDownload($row[3], 'wav'); 
+			}
 			?> </TD></TR>
 			<?php } ?>
 		</TR>
@@ -215,22 +217,6 @@ header("Location:index.php");
 
 			<
 			<TD> <?php 
-			//header('Content-disposition: attachment;filename='.$_GET['name']);		
-			//$lob = $row[7]->load();
-         //$row[7]->free();	
-         //printf('<img src="data:image/jog;base64,%s"/>', base64_encode($row[7]));
-         //$exImage = base64_decode($row[7], $strict = null);
-			//
-			//file_put_contents('temp'."/dkjgdjg".$row[3], $exImage);
-			
-			
-			//$im = imagecreatefromstring($row[7]);
-			//$im = $row[7];
-			//imagejpeg($im, 'temp/COMPLEXTEST'.$row[3].'.jpg')
-			//ob_start();
-    		//imagejpeg($im);
-    		//$imageData = ob_get_clean();
-			//showDownload($im, $row[3], 'jpg');
 			if($row[7] != NULL){
 				showDownload($row[3], 'jpg'); 
 			}
