@@ -126,5 +126,6 @@ else{
 	echo $_POST['audioFile'];
 }
 ?>
-
-<?php 
+<form name = "return" method = "post" action ="index.php">
+	<input type = "submit" name="breturn" value = "Return to User Page" />
+</form>

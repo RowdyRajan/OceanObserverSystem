@@ -78,8 +78,10 @@ header("Location:index.php");
 		<TH>Audio Date Created</TH>
 		</TR>
 		<?php
+
 			while ($row = oci_fetch_array($stid, OCI_NUM)){ ?>
 			<tr>
+
 			<TD> <?php echo $row[0]; ?> </TD>
 			<TD> <?php echo $row[1];?> </TD>
 			<TD> <?php echo $row[2];?> </TD>
@@ -87,8 +89,15 @@ header("Location:index.php");
 			<TD> <?php echo $row[4];?> </TD>
 			<TD> <?php echo $row[5];?> </TD>
 			<TD> <?php echo $row[6];?> </TD>
+
 			
-			</tr>
+
+			<TD> <?php 
+				//print $lob->load();
+				//browser promts to save or open the file
+			showDownload($row[7], $row[3], 'wav'); 
+			?> </TD> </tr>
+
 			<?php } ?>
 		
 		</TABLE>	
@@ -182,16 +191,38 @@ header("Location:index.php");
 		</TR>
 		
 		<?php
+
 		
 			while ($row = oci_fetch_array($stid, OCI_NUM)){ ?>
 			<tr>
+
 			<TD> <?php echo $row[0]; ?> </TD>
 			<TD> <?php echo $row[1];?> </TD>
 			<TD> <?php echo $row[2];?> </TD>
 			<TD> <?php echo $row[3];?> </TD>
 			<TD> <?php echo $row[4];?> </TD>
 			<TD> <?php echo $row[5];?> </TD>
-			</tr>
+
+		
+
+			<TD> <?php 
+			//printf('<img src="data:image/jog;base64,%s"/>', base64_encode(file_get_contents($row[6])));echo 'THUMBNAIL!'; echo $row[6]; echo 'this is the thumbnail';
+			//header('Content-disposition: attachment;filename='.$_GET['name']);
+
+          $lob = $row[6];
+          //$row[6]->free();
+          printf('<img src="data:image/jog;base64,%s"/>', base64_encode($lob));		
+			?> </TD>
+
+			
+			<TD> <?php 
+			//header('Content-disposition: attachment;filename='.$_GET['name']);		
+			//$lob = $row[7]->load();
+         //$row[7]->free();	
+			//echo $row[7];
+			showDownload($row[7], $row[3], 'jpg'); 
+			?> </TD></TR>
+
 			<?php } ?>
 	
 		</TABLE>	
@@ -364,8 +395,20 @@ header("Location:index.php");
  	
 <?php
 			} 
-		} 
+
+		}
 		
+function showDownload($data, $id, $ext){
+	if($data != NULL){
+     	echo '<form name = "download" method ="post" action="download.php">
+				<input type="hidden" name="id" value="'.(int)$id.'" />
+				<input type="hidden" name="data" value="'.$data.'" />
+				<input type="hidden" name="ext" value="'.$ext.'" />
+				<input type = "submit" value="Downaload"/>
+				</form>';
+	}
+}
+
 ?>		
 		
 		

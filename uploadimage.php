@@ -146,8 +146,11 @@ else{
 	echo $_POST['image_id'];
 	echo $_POST['imageFile'];
 }
-?>
 
+?>
+<form name = "return" method = "post" action ="index.php">
+	<input type = "submit" name="breturn" value = "Return to User Page" />
+</form>
 <?php 
 //Copied and Pasted from https://stackoverflow.com/questions/11376315/creating-a-thumbnail-from-an-uploaded-image
 function createThumbnail($filepath, $thumbpath, $thumbnail_width, $thumbnail_height) {
