@@ -31,7 +31,7 @@
     	}
     	else if($ext == 'wav'){
     		//get audio to work
-    		$data = row[0];
+    		$data = $row[0];
     	}
     	ob_clean();
 		//$size = strlen($im);
