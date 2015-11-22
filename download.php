@@ -18,11 +18,19 @@
 			$err = oci_error($stid);
 			echo htmlentities($err['message']);
 		} 
-		$row = oci_fetch_array($stid, OCI_NUM+OCI_RETURN_LOBS);
+		$row = oci_fetch_array($stid, OCI_NUM+OCI_RETURN_LOBS+OCI_RETURN_NULLS);
 		// Free the statement identifier when closing the connection
 		oci_free_statement($stid);
 		oci_close($conn);
-		
+		/*
+		//If no blob data is found 
+		if(!$row){
+			echo 'Alert("No recorded data found in the database")';
+			echo 'made it in?';
+			header("Location:searchsensors.php");
+			exit();
+		}
+		*/
 		if($ext == 'jpg'){
 			$im = imagecreatefromstring($row[0]);
 			ob_start();
@@ -30,7 +38,6 @@
     		$data = ob_get_clean();
     	}
     	else if($ext == 'wav'){
-    		//get audio to work
     		$data = $row[0];
     	}
     	ob_clean();
@@ -46,8 +53,9 @@
     	//echo $data;
     	//imagejpeg($im);
 		print($data);
-		//header("Location:searchsensors.php");
-		//exit();	
+		
+		header("Location:searchsensors.php");
+		exit();	
 	}
 	else{
 		header("Location:index.php");		 
