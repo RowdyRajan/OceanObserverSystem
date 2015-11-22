@@ -13,7 +13,7 @@ header("Location:index.php");
 	<title>Admin Dashboard </title>
 	<script type="text/javascript" src="libraries/jquery-ui/external/jquery/jquery.js"></script>
 	<script type="text/javascript" src="libraries/jquery-ui/jquery-ui.js"></script>
-	<link rel="stylesheet" href="libraries/jquery-ui/jquery-ui.min.css"></script>
+	<link rel="stylesheet" href="libraries/jquery-ui/jquery-ui.min.css">
 	
 	<style type="text/css">
 		#submitAddNewUser{
@@ -29,13 +29,21 @@ header("Location:index.php");
 		}
 		
 		#divAddNewUser{
-			display: None;		
+			display: none;		
 		}
 		
-		#divAddExistingUser{
-			display: None;		
+		#divAddNewUser{
+			display: none;		
 		}
-		
+		#divUpdateUser{
+			display: none;		
+		}
+		#divUpdateRole{
+			display: none;
+		}
+		#divUpdatePerson{
+			display: none;		
+		}
 		.ui-tabs {
 			height:100%;			
 		}
@@ -238,6 +246,47 @@ header("Location:index.php");
 		</form>
   	</div>
   	
+  		<br/>
+	<!-- Modify user code -->
+	<h3 class="subheaders">Update User Information</h3>
+	<button id="btnUpdateUser">Change User Password</button>
+	<button id="btnUpdateRole">Change User's Role</button>
+  	<button id="btnUpdatePerson">Change Person's Information</button>
+
+  	<div id="divUpdateUser">
+		<form name="UpdateUser"method="post" action="updateuser.php">
+			Enter Username:<br/>
+			<input type="text" name="username" required/> <br/>
+			Enter New Password:<br/>
+			<input type="password" name="password1" required/> <br/>
+			Re-enter New Password:<br/>
+			<input type="password" name="password2" required/> <br/>
+			<input type="submit" name="updatepassword" value="Change Password" />	
+		</form>
+  	</div>
+  	
+	<div id="divUpdateRole">
+		<form name="UpdateRole"method="post" action="changerole.php">
+			Enter Username:<br/>
+			<input type="text" name="username" required/> <br/>
+			Enter New Role:
+			<select name="role">
+				<option value="a">Administrator</option>
+				<option value="s">Scientist</option>
+				<option value="d">Data Curator</option>			
+			</select> <br/>
+			<input type="submit" name="updaterole" value="Change Role" />	
+		</form>
+  	</div>
+  	
+  	<div id="divUpdatePerson">
+		<form name="UpdatePerson"method="post" action="updateperson.php">
+			Enter Email of Person: <br/>
+			<input type="text" name="email" required/> <br/>
+			<input type="submit" value="Change Personal Information" name="updateperson"/>	
+		</form>
+  	</div>
+  	
 	
   </div> <!-- end of second tab -->
   <div id="tabs-3">
@@ -347,15 +396,16 @@ header("Location:index.php");
   		}
   	});
   	
+  	//Handling User and Person Deletion
   	
   	var deleteUserShowing = false;
   	var deletePersonShowing = false;
   		
   	$("#btnDeleteUser").click(function () {
  		if(deletePersonShowing == true){
- 			$("#divDeletePerson").fadeOut();
+ 			$("#divDeletePerson").fadeOut('fast');
  			$("#divDeletePerson").promise().done(function () {
- 					$("#divDeleteUser").fadeIn();
+ 				$("#divDeleteUser").fadeIn();
  			});
   			
   			deletePersonShowing = false;	
@@ -380,6 +430,79 @@ header("Location:index.php");
 			deletePersonShowing = true; 		
   		}
   	});
+  	
+  	//Handling User and Person Changes
+  	
+  	var updateUserShowing = false;
+  	var updatePersonShowing = false;
+  	var updateRoleShowing = false;
+  	
+  	$("#btnUpdateUser").click(function () {
+		if(updatePersonShowing == true){
+			$("#divUpdatePerson").fadeOut('fast');
+			$("#divUpdatePerson").promise().done(function () {
+				$("#divUpdateUser").fadeIn();			
+			});
+			updatePersonShowing = false;
+			updateUserShowing = true;
+		}
+		else if(updateRoleShowing == true){
+			$("#divUpdateRole").fadeOut('fast');
+			$("#divUpdateRole").promise().done(function () {
+				$("#divUpdateUser").fadeIn();			
+			});
+			updateRoleShowing = false;		
+			updateUserShowing = true;
+		}
+		else{
+			$("#divUpdateUser").fadeIn();
+			updateUserShowing = true;		
+		}
+	});
+	
+	$("#btnUpdatePerson").click(function () {
+		if(updateUserShowing == true){
+			$("#divUpdateUser").fadeOut('fast');
+			$("#divUpdateUser").promise().done(function () {
+				$("#divUpdatePerson").fadeIn();			
+			});
+			updateUserShowing = false;
+			updatePersonShowing = true;
+		}else if (updateRoleShowing == true) {
+			$("#divUpdateRole").fadeOut('fast');
+			$("#divUpdateRole").promise().done(function () {
+				$("#divUpdatePerson").fadeIn();			
+			});
+			updateRoleShowing = false;		
+			updatePersonShowing = true;	
+		}
+		else{
+			$("#divUpdatePerson").fadeIn();
+			UpdatePersonShowing = true;		
+		}
+	});
+	
+	$("#btnUpdateRole").click(function () {
+		if(updateUserShowing == true){
+			$("#divUpdateUser").fadeOut('fast');
+			$("#divUpdateUser").promise().done(function () {
+				$("#divUpdateRole").fadeIn();			
+			});
+			updateUserShowing = false;
+			updateRoleShowing = true;
+		}else if (updatePersonShowing == true) {
+			$("#divUpdatePerson").fadeOut('fast');
+			$("#divUpdatePerson").promise().done(function () {
+				$("#divUpdateRole").fadeIn();			
+			});
+			updatePersonShowing = false;		
+			updateRoleShowing = true;	
+		}
+		else{
+			$("#divUpdateRole").fadeIn();
+			UpdateRoleShowing = true;		
+		}
+	});
   	
 </script>
 </body>
