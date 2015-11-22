@@ -218,7 +218,6 @@ header("Location:index.php");
 			//header('Content-disposition: attachment;filename='.$_GET['name']);		
 			//$lob = $row[7]->load();
          //$row[7]->free();	
-			//echo $row[7];
 			showDownload($row[7], $row[3], 'jpg'); 
 			?> </TD></TR>
 			<?php } ?>

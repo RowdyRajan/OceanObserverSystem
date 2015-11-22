@@ -7,8 +7,8 @@
 		$ext = $_POST['ext'];
 		//echo $data;
 		
-		file_put_contents('temp'."/h".$id, base64_encode($data));h
-		/*
+		//file_put_contents('temp'."/h".$id, base64_encode($data));h
+		
 		$size = strlen($data);
 		header('Content-Description: File Transfer');
     	header('Content-Type: octet-stream');
@@ -18,11 +18,11 @@
     	header('Pragma: public');
     	header("Content-Transfer-Encoding: binary");
     	//header('Content-Length: ' . size);
-    	printf('<img src="data:image/jog;base64,%s"/>', base64_encode($data));
+    	//printf('<img src="data:image/jog;base64,%s"/>', base64_encode($data));
 		
 		//header("Location:searchsensors.php");
 		//exit();
-		*/
+		
 	}
 	else{
 		header("Location:index.php");		 
