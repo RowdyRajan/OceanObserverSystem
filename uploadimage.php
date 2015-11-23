@@ -13,7 +13,7 @@ else if(isset($_POST['sensor_id']) && isset($_POST['image_id'])) //&& isset($_PO
 	//$target_dir = "uploads/";
 	//$target_file = $target_dir . basename($_FILES["imageFile"]["name"]);
 	$image = file_get_contents($_FILES['imageFile']['tmp_name']);
-	//$image = base64_encode($image);
+	$image = base64_encode($image);
 	$image_dir =$_FILES["imageFile"]["tmp_name"];
 	$uploadOk = 1;
 	$imageFileType = pathinfo(basename($_FILES["imageFile"]["name"]),PATHINFO_EXTENSION);
