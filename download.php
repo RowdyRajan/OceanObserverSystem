@@ -31,6 +31,7 @@
 			exit();
 		}
 		*/
+
 		if($ext == 'jpg'){
 			$imageData = base64_decode($row[0]);
 			$im = imagecreatefromstring($imageData);
