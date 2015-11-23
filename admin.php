@@ -71,6 +71,7 @@ header("Location:index.php");
 	</style>
 		
 	<script>
+		//Creates tabs
 		$(function() {
     		$("#tabs").tabs();
   		});
@@ -88,20 +89,24 @@ header("Location:index.php");
     <li><a href="#tabs-3">Account Settings</a></li>
     <button id="logout">Log out</button>
   </ul>
+  
+  <!-- Sensor Management tab -->
   <div id="tabs-1">
   	<h3 class="subheaders">Add Sensors</h3> 
   		<?php
+  		//Displaying errors returned from form submits
   		if(isset($_GET['sError']) && $_GET['sError'] == 'general'){
   			echo "<span class='error'> Error adding sensor </span>" ;
   		} elseif(isset($_GET['sError']) && $_GET['sError'] == 'takenSensorname'){
 			  	echo "<span class='error'> Sensor Id already taken</span>" ;
   		}
-  		
+  		//Displaying successes returned from form submits
   		if(isset($_GET['sSuccess']) && $_GET['sSuccess'] == 'addedSensor'){
   			echo "<span class='success'> Successfully added sensor </span>";
   		}
   		?>
 
+	 <!-- Add Sensor Form -->
   	<div id="divAddSensor">
 		<form id="formAddSensor" name="addSensor"method="post" action="sensorManagement.php">
 			Enter Sensor Id:<br/>	
@@ -120,6 +125,7 @@ header("Location:index.php");
 	
 	<h3 class="subheaders">Remove Sensors</h3>
 	<?php
+		//Displaying errors and successes returned from form submits
   		if(isset($_GET['sError']) && $_GET['sError'] == 'deleteGeneral'){
   			echo "<span class='error'> Error deleting sensor </span>" ;
   		} elseif(isset($_GET['sError']) && $_GET['sError'] == 'invalidSensorname'){
@@ -130,6 +136,8 @@ header("Location:index.php");
   			echo "<span class='success'> Successfully removed sensor </span>";
   		}
   		?>
+  	
+  	<!-- Remove Sensor Form -->
   	<div id="divRemoveSensor">
 		<form name="removeSensor"method="post" action="sensorManagement.php">
 			Enter Sensor Id:<br/>	
@@ -145,6 +153,7 @@ header("Location:index.php");
   	<button id="btnAddNewUser"> Add New User</button>
   	<button id="btnAddExistingUser"> Add Existing User </button>
   	<?php
+  		//Displaying errors and successes returned from form submits
   		if(isset($_GET['error']) && $_GET['error'] == 'general'){
 			echo "<span class='error'> Error adding user </span>" ;		
   		} elseif(isset($_GET['error']) && $_GET['error'] == 'invalidEmail') {
@@ -161,6 +170,7 @@ header("Location:index.php");
   			
   	?>
   	
+  	<!-- Add New User Form -->
   	<div id="divAddNewUser">
 	<form name="addNewUser"method="post" action="addUser.php">
 		Enter new username: <br/>
@@ -188,6 +198,7 @@ header("Location:index.php");
 	</form>
 	</div>
 	
+	<!-- Add Existing User Form -->
 	<div id="divAddExistingUser">
 	<form name="addExistingUser"method="post" action="addUser.php">
 		Enter email:<br/>	
@@ -212,6 +223,7 @@ header("Location:index.php");
   	<button id="btnDeletePerson"> Delete a person</button>
   	
   	<?php
+  		//Displaying errors and successes returned from form submits
   		if(isset($_GET['dError']) && $_GET['dError'] == 'general'){
   			echo "<span class='error'> Error deleting target </span>" ;
   		} elseif(isset($_GET['dError']) && $_GET['dError'] == 'invalidUsername'){
@@ -228,6 +240,7 @@ header("Location:index.php");
   			
   	?>
   	
+  	<!-- Delete User Form -->
   	<div id="divDeleteUser">
 		<form name="DeleteUser"method="post" action="deleteUser.php">
 			Enter Username you wish to delete:<br/>
@@ -236,6 +249,7 @@ header("Location:index.php");
 		</form>
   	</div>
   	
+  	<!-- Delete Person Form -->
   	<div id="divDeletePerson">
   		<form name="DeletePerson"method="post" action="deleteUser.php">
 			Enter the email of person you wish to delete:<br/>
@@ -330,6 +344,7 @@ header("Location:index.php");
   		});
   	//Handing the add users
   	
+  	//Code for fading in and out forms based on button clicks
   	var newUserShowing = false;
   	var existingUserShowing = false;	
   	$("#btnAddNewUser").click(function () {
