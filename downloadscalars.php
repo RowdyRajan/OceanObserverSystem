@@ -1,4 +1,12 @@
 <?php
+include	("PHPconnectionDB.php");
+//Redirects login if not signed in
+if(isset($_COOKIE['Status']) && $_COOKIE['Status'] == "LoggedIn"){	 }
+else{
+header("Location:index.php");		 
+} 
+?>
+<?php
 	if(isset($_POST['scalars']) && isset($_COOKIE['Person']) && $_COOKIE['Status'] == "LoggedIn"
 	&& $_COOKIE['Role'] == 's'){
 		//split scalars back into an array

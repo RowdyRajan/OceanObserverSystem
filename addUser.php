@@ -1,4 +1,13 @@
 <?php
+include	("PHPconnectionDB.php");
+//Redirects login if not signed in
+if(isset($_COOKIE['Status']) && $_COOKIE['Status'] == "LoggedIn" && $_COOKIE["Role"] == 'a' ){	 }
+else{
+header("Location:index.php");		 
+} 
+?>
+
+<?php
 	include("PHPconnectionDB.php");
 	//Checks to see if username is already in the database
 	function validUserName ($username) {

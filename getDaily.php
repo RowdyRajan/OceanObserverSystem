@@ -1,3 +1,11 @@
+<?php
+include	("PHPconnectionDB.php");
+//Redirects login if not signed in
+if(isset($_COOKIE['Status']) && $_COOKIE['Status'] == "LoggedIn"){	 }
+else{
+header("Location:index.php");		 
+} 
+?>
 <html>
 	<?php
 		include	("PHPconnectionDB.php");	
