@@ -102,7 +102,7 @@ header("Location:index.php");
 			} elseif($type == "scalar"){
 			
 			//code for formating date stolen form https://community.oracle.com/thread/312115?start=0&tstart=0
-			 $sql = "Select S.sensor_id, S.location, S.description, SC.id, to_char(SC.date_created, 'dd/mm/yyyy hh24:mi:ss') datetime, SC.value
+			 $sql = "Select S.sensor_id, S.location, S.description, SC.id, to_char(SC.date_created, 'DD/MM/YYYY HH24:MI:SS') datetime, SC.value
 			 			FROM sensors S, scalar_data SC, subscriptions U 
 			 			WHERE	U.person_id =".$_COOKIE['Person']." 
 			 			AND S.sensor_type = 's'
@@ -418,7 +418,7 @@ function showDownload($id, $ext){
 			<input type="hidden" name="id" value="'.(int)$id.'" />	
 			<input type="hidden" name="data" value="'.$data.'" />
 			<input type="hidden" name="ext" value="'.$ext.'" />
-			<input type = "submit" value="Downaload"/>
+			<input type = "submit" value="Download"/>
 			</form>';
 }		
 ?>		

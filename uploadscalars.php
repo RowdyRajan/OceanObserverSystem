@@ -1,5 +1,5 @@
 <?php
-//Uploads audio then put the audio into the 
+//For uploading scalar data from a .csv file
 
 
 //Much of this code is from http://www.w3schools.com/php/php_file_upload.asp
@@ -9,11 +9,6 @@ if(!(isset($_COOKIE['Person'])) || !($_COOKIE['Status'] == "LoggedIn") || !($_CO
 {
 	header("Location:index.php");	
 }
-//$target_dir = "uploads/";
-//$target_file = $target_dir . basename($_FILES["csvFile"]["name"]);
-//explode stolen from comment by zzzzBov at http://stackoverflow.com/questions/4103287/read-a-plain-text-file-with-php
-
-$audio_dir =$_FILES["csvFile"]["tmp_name"];
 $uploadOk = 1;
 $csvFileType = pathinfo(basename($_FILES["csvFile"]["name"]),PATHINFO_EXTENSION);
 
@@ -92,131 +87,7 @@ foreach ($scalars as &$row) {
 		}
 	}
 }
-$conn=connect();
-$sql = 			
-'DROP TABLE fact';
-$stid = oci_parse($conn, $sql);
-$res=oci_execute($stid);
-$res = oci_commit($conn);
-
-$sql = 'CREATE TABLE fact(
-		sensor_id	int,
-		id		int,
-		time_id		date,
-		svalue		float,
-		PRIMARY KEY (sensor_id, id, time_id),
-		FOREIGN KEY (sensor_id) REFERENCES sensors,
-		FOREIGN KEY (id) REFERENCES scalar_data,
-		FOREIGN KEY (time_id) REFERENCES time)';
-$stid = oci_parse($conn, $sql);
-$res=oci_execute($stid);
-$res = oci_commit($conn);
-
-$sql = 			
-'INSERT INTO fact ( sensor_id, id, time_id, svalue)
-SELECT	s.sensor_id, c.id, t.time_id, c.value
-FROM	sensors s, scalar_data c, time t
-WHERE	s.sensor_id = c.sensor_id
-AND	t.time_id LIKE c.date_created';
-$stid = oci_parse($conn, $sql);
-$res=oci_execute($stid);
-$res = oci_commit($conn);
-
-	/*
-	//Check id taken
-	$conn=connect();
-	$sql = 'SELECT id FROM scalar_data
-			WHERE id = '.$_POST['id'].'';
-	$stid = oci_parse($conn, $sql );
-	//Execute a statement returned from oci_parse()
-	$res=oci_execute($stid, OCI_DEFAULT); 		   
-	//if error, retrieve the error using the oci_error() function & output an error
-	if (!$res) {
-		$err = oci_error($stid);
-		echo htmlentities($err['message']);
-	} 
-	$row = oci_fetch_array($stid, OCI_ASSOC);
-	if($row['id']){
-		echo 'An audio with the audio id: '.$_POST['id'].' already exists. <br/>';
-		$uploadOk = 0;
-	}
-	oci_free_statement($stid);
-	
-	$conn=connect();
-	$sql = 'SELECT sensor_id FROM sensors
-			WHERE sensor_id = '.$_POST['sensor_id'].'';
-	$stid = oci_parse($conn, $sql );
-	//Execute a statement returned from oci_parse()
-	$res=oci_execute($stid, OCI_DEFAULT); 		   
-	//if error, retrieve the error using the oci_error() function & output an error
-	if (!$res) {
-		$err = oci_error($stid);
-		echo htmlentities($err['message']);
-	} 
-	$row = oci_fetch_array($stid, OCI_ASSOC);
-	if(!$row['SENSOR_ID']){
-		echo 'The sensor with the sensor id: '.$_POST['sensor_id'].' does not exist. <br/>';
-		$uploadOk = 0;
-	}
-
-	// Check if $uploadOk is set to 0 by an error
-	if ($uploadOk == 0) {
-		echo "Sorry, your file was not uploaded.";
-	}
-	else{
-		
-		//Attempt to put audio into database
-		//Code stolen and adapted from https://stackoverflow.com/questions/11970258/upload-scalar_data-as-blobs-in-oracle-using-php
-		
-		$conn=connect();
-		//RECOREDED DATA VS. RECOREDED DATA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		$sql = 
-			'INSERT INTO scalar_data(id, sensor_id, date_created, description, recorded_data)
-			VALUES (\''.$_POST['id'].'\', \''.$_POST['sensor_id'].'\', to_date(\''.$_POST['date_created'].'\',
-			\'dd/mm/yyyy HH24:Mi:SS\'), \''.$_POST['description'].'\', empty_blob()) 
-			RETURNING recorded_data INTO :recorded_data';
-
-		$stid = oci_parse($conn, $sql);
-		
-		$blob = oci_new_descriptor($conn, OCI_D_LOB);
-		oci_bind_by_name($stid, ':recorded_data', $blob, -1, OCI_B_BLOB);
-		oci_execute($stid, OCI_DEFAULT) or die ("Unable to execute query");
-
-		if(!$blob->save($audio)){
-			oci_rollback($conn);
-			echo "Aborted.";
-		}
-		else {
-			$res = oci_commit($conn);
 			
-			if (!$res) {
-				$err = oci_error($conn);
-				trigger_error(htmlentities($err['message']), E_USER_ERROR);
-			}
-			else{
-				echo "audio File Successfully Uploaded.";
-				
-				//Show view of the audio.
-				//Stolen from Gordon♦'s comment at https://stackoverflow.com/questions/3385982/the-audio-cannot-be-displayed-because-it-contains-errors
-				//echo '<br/>';
-				//printf('<img src="data:audio/jog;base64,%s"/>', base64_encode($thumb));
-				//echo '<br/><br/>';
-				//printf('<img src="data:audio/jog;base64,%s"/>', base64_encode($audio));
-			}
-		}
-		oci_free_statement($stid);
-		$blob->free();
-		
-	}
-}
-
-else{
-	echo "Please input proper data.";
-	echo $_POST['sensor_id'];
-	echo $_POST['id'];
-	echo $_POST['csvFile'];
-}
-*/
 ?>
 <form name = "return" method = "post" action ="index.php">
 	<input type = "submit" name="breturn" value = "Return to User Page" />

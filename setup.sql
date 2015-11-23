@@ -1,3 +1,5 @@
+DROP TABLE fact;
+DROP TABLE time;
 DROP TABLE users;
 DROP TABLE subscriptions;
 DROP TABLE audio_recordings;
@@ -108,43 +110,5 @@ CREATE TABLE scalar_data(
 ) tablespace c391ware;
 
 commit;
-
-CREATE TABLE time(
-	time_id		date,
-	day		char(1),
-	week		varchar(2),
-	month		varchar(2),
-	year		varchar(4),
-	PRIMARY KEY(time_id));
-commit;
-
-INSERT INTO time ( time_id, day, week, month, year )
-SELECT
-	TRUNC ( sd + rn ) time_id,
-	TO_CHAR( sd + rn, 'D' ) day,
-	TO_CHAR( sd + rn, 'W' ) week,
-	TO_CHAR( sd + rn, 'MM' ) month,
-	TO_CHAR( sd + rn, 'YYYY' ) year
-	FROM
-  		( 
-    		SELECT 
-      		TO_DATE( '12/31/2002', 'MM/DD/YYYY' ) sd,
-      		rownum rn
-    		FROM dual
-      		CONNECT BY level <= 6575
-  		)
-commit;
-	
-ALTER TABLE time ADD(
-	CONSTRAINT 
-CREATE TABLE fact(
-	sensor_id 	int,
-	id		int,
-	time_id		int,
-	value		float,
-	PRIMARY KEY(sensor_id, id, time_id),
-	FOREIGN KEY(sensor_id) REFERENCES sensors,
-	FOREIGN KEY(id) REFERENCES scalar_data,
-	FOREIGN KEY(time_id) REFERENCES time) tablespace c391ware;
 
 

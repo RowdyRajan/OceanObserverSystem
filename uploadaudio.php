@@ -1,6 +1,5 @@
 <?php
-//Uploads audio then put the audio into the 
-
+//For uploading audio into the database
 
 //Much of this code is from http://www.w3schools.com/php/php_file_upload.asp
 include("PHPconnectionDB.php");
@@ -9,15 +8,12 @@ if(!(isset($_COOKIE['Person'])) || !($_COOKIE['Status'] == "LoggedIn") || !($_CO
 {
 	header("Location:index.php");	
 }
-else if(isset($_POST['sensor_id']) && isset($_POST['recording_id'])) //&& isset($_POST['audioFile']))
+else if(isset($_POST['sensor_id']) && isset($_POST['recording_id']))
 {
-	//$target_dir = "uploads/";
-	//$target_file = $target_dir . basename($_FILES["audioFile"]["name"]);
 	$audio = file_get_contents($_FILES['audioFile']['tmp_name']);
 	$audio_dir =$_FILES["audioFile"]["tmp_name"];
 	$uploadOk = 1;
 	$audioFileType = pathinfo(basename($_FILES["audioFile"]["name"]),PATHINFO_EXTENSION);
-	
 	/*
 	// Check file size
 	if ($_FILES["audioFile"]["size"] > 500000) {
@@ -33,7 +29,7 @@ else if(isset($_POST['sensor_id']) && isset($_POST['recording_id'])) //&& isset(
 		$uploadOk = 0;
 	}
 	
-	//Check recording_id taken
+	//Check if recording_id is already taken
 	$conn=connect();
 	$sql = 'SELECT recording_id FROM audio_recordings
 			WHERE recording_id = '.$_POST['recording_id'].'';
@@ -105,13 +101,6 @@ else if(isset($_POST['sensor_id']) && isset($_POST['recording_id'])) //&& isset(
 			}
 			else{
 				echo "audio File Successfully Uploaded.";
-				
-				//Show view of the audio.
-				//Stolen from Gordon♦'s comment at https://stackoverflow.com/questions/3385982/the-audio-cannot-be-displayed-because-it-contains-errors
-				//echo '<br/>';
-				//printf('<img src="data:audio/jog;base64,%s"/>', base64_encode($thumb));
-				//echo '<br/><br/>';
-				//printf('<img src="data:audio/jog;base64,%s"/>', base64_encode($audio));
 			}
 		}
 		oci_free_statement($stid);

@@ -56,7 +56,9 @@ header("Location:index.php");
   	<button id="btnUploadAudio"> Upload Audio</button>
   	<button id="btnUploadScalars"> Upload Scalars</button>
 	<div id="divUploadImage">
-		<?php echo '<h3>Uploading Image:</h3>';
+		<?php 
+		//Form for uploading an image
+		echo '<h3>Uploading Image:</h3>';
 		echo '<form enctype="multipart/form-data" name = "uploadimage" method = "post" action = "uploadimage.php">';
 		echo 'Image ID: <input type="number" name="image_id" pattern="[0-9]" required="true"/><br/>';
 		echo 'Sensor ID: <input type="number" name="sensor_id" pattern="[0-9]" required="true"/><br/>';
@@ -67,7 +69,9 @@ header("Location:index.php");
 		echo '<input type = "submit" name ="imageSubmit" value = "Submit Image"/></form>'; ?>
 	</div>
 	<div id="divUploadAudio">
-		<?php echo '<h3>Uploading Audio:</h3>';
+		<?php 
+		//Form for uploading an audio file
+		echo '<h3>Uploading Audio:</h3>';
 		echo '<form enctype="multipart/form-data" name = "uploadaudio" method = "post" action = "uploadaudio.php">';
 		echo 'Recording ID: <input type="number" name="recording_id" pattern="[0-9]" required="true"/><br/>';
 		echo 'Sensor ID: <input type="number" name="sensor_id" pattern="[0-9]" required="true"/><br/>';
@@ -79,7 +83,9 @@ header("Location:index.php");
 		echo '<input type = "submit" name ="audioSubmit" value = "Submit Audio"/></form>'; ?>
 	</div>
 	<div id="divUploadScalars">
-		<?php echo '<h3>Uploading Batch of Scalars as a CSV File:</h3>';
+		<?php 
+		//form for uploading a scalar
+		echo '<h3>Uploading Batch of Scalars as a CSV File:</h3>';
 		echo '<form enctype="multipart/form-data" name = "uploadscalars" method = "post" action = "uploadscalars.php">';
 		echo 'File: <input type="file" name="csvFile" accept=".csv" id="csvFile" required = "true"/><br/>';
 		echo '<input type = "submit" name ="csvSubmit" value = "Submit Scalars"/></form>'; ?>

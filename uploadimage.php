@@ -1,5 +1,5 @@
 <?php
-//Uploads image then put the image into the 
+//For uploading images into the database
 
 //Much of this code is from http://www.w3schools.com/php/php_file_upload.asp
 include("PHPconnectionDB.php");
@@ -10,8 +10,6 @@ if(!(isset($_COOKIE['Person'])) || !($_COOKIE['Status'] == "LoggedIn") || !($_CO
 }
 else if(isset($_POST['sensor_id']) && isset($_POST['image_id'])) //&& isset($_POST['imageFile']))
 {
-	//$target_dir = "uploads/";
-	//$target_file = $target_dir . basename($_FILES["imageFile"]["name"]);
 	$image = file_get_contents($_FILES['imageFile']['tmp_name']);
 	$image = base64_encode($image);
 	$image_dir =$_FILES["imageFile"]["tmp_name"];
@@ -44,7 +42,7 @@ else if(isset($_POST['sensor_id']) && isset($_POST['image_id'])) //&& isset($_PO
 		$uploadOk = 0;
 	}
 	
-		//Check image_id taken
+	//Check if image_id taken
 	$conn=connect();
 	$sql = 'SELECT image_id FROM images
 			WHERE image_id = '.$_POST['image_id'].'';
@@ -86,18 +84,13 @@ else if(isset($_POST['sensor_id']) && isset($_POST['image_id'])) //&& isset($_PO
 	}
 	else{
 		//Create Thumbnail
-		//createThumbnail($filepath, $thumbpath, $thumbnail_width, $thumbnail_height);
-		//$thumb_dir = createThumbnail($image_dir, $image_dir . '_thumb.jpg', 100, 100);
-		//$thumb = file_get_contents(thumb_dir);
 		$thumb = createThumbnail($image_dir, $image_dir . '_thumb.jpg', 50, 50);
-		//$thumb = file_get_contents(createThumbnail($image_dir, $image_dir . '_thumb.jpg', 100, 100));
 		if(!$thumb){
 			echo "Sorry, an error has occurred while creating thumbnail";
 			$uploadOk = 0;
 		}
 		//Attempt to put image into database
 		//Code stolen and adapted from https://stackoverflow.com/questions/11970258/upload-images-as-blobs-in-oracle-using-php
-		
 		$conn=connect();
 		//RECOREDED DATA VS. RECOREDED DATA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		$sql = 
@@ -126,8 +119,7 @@ else if(isset($_POST['sensor_id']) && isset($_POST['image_id'])) //&& isset($_PO
 				trigger_error(htmlentities($err['message']), E_USER_ERROR);
 			}
 			else{
-				echo "Image File Successfully Uploaded.";
-				
+				echo "Image File Successfully Uploaded.";	
 				//Show view of the image.
 				//Stolen from Gordon♦'s comment at https://stackoverflow.com/questions/3385982/the-image-cannot-be-displayed-because-it-contains-errors
 				echo '<br/>';
@@ -182,9 +174,7 @@ function createThumbnail($filepath, $thumbpath, $thumbnail_width, $thumbnail_hei
     $old_image = $imgcreatefrom($filepath);
     $new_image = imagecreatetruecolor($thumbnail_width, $thumbnail_height);
     imagecopyresampled($new_image, $old_image, $dest_x, $dest_y, 0, 0, $new_width, $new_height, $original_width, $original_height);
-    //$imgt($new_image, null, 75);
 
-	//echo 'thumbldkfgnsdkjgnk: '.$imgt($new_image, null, 75).' <br/>';
 	//Stolen from comment by gre_gor at https://stackoverflow.com/questions/33601108/get-stream-from-imagecopyresampled
 	ob_start();
     imagejpeg($new_image);
