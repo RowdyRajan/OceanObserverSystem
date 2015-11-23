@@ -14,9 +14,13 @@
 	<body>
 		<?php
 			include("PHPconnectionDB.php");
+			//If logged in from index.php
 			if(isset($_POST['confirm'])){
+								
 				$username=$_POST['username'];
 				$password=$_POST['password'];	
+
+				//Getting the user from the given data				
 				$conn=connect();
 				$sql = '	SELECT *
 							FROM users u
@@ -32,11 +36,13 @@
 				$row = oci_fetch_array($stid, OCI_ASSOC);
 				$selectedRow = $row;
 
+				//If no user that matches the given information then display a message and return to index.php
 		 		if($row == NULL){
 					header('Refresh: 3; url = index.php');		 			
 		 			echo '<h2>Incorrect username or password!</h2>';
 		 			exit;}
-
+				
+				//IF the row is not empty create correct cookies for the user 
 		 		elseif($_POST['confirm'] == "Log In") {
 		 			
 
@@ -48,17 +54,17 @@
 		 			setcookie("Status", "LoggedIn", time()+60*60*24);
 		 			setcookie("Username", $selectedRow["USER_NAME"],time()+60*60*24);
 		 			
+		 			//Redirect to correct page based on user
 		 			if($role == 'a'){
 		 				header("Location:admin.php");
+		 				exit();
 		 			} elseif($role == 's'){
-				 		header("Location:scientist.php");	
+				 		header("Location:scientist.php");
+				 		exit();	
 		 			} elseif($role == 'd'){
-						header("Location:dataCurator.php");		 			
-		 			}else{
-		 				
-		 				//header("Location:index.php");
+						header("Location:dataCurator.php");
+						exit();		 			
 		 			}
-
 		 		} 
 		 		elseif($_POST['confirm'] == "Change Password") {
 					echo '<h1>Password Change for '.$username.'</h1>';

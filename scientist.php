@@ -119,11 +119,15 @@ header("Location:index.php");
 	</TABLE>  
 
   </div>
+  
+  <!-- Search tab -->
   <div id="tabs-2">
    <h3 class="subheaders"> Search Sensor Data</h3>
+	
+	<!-- Form for searching -->	   
    <div id="divSearchFields">
    <form name = "searchsensor" method = post action = "searchsensors.php">
-  		Keywords: <input type="text" name="fields" value ="." /><br/>
+  		Keywords: <input type="text" name="fields" /><br/>
  		Sensor types:<select name = "type">
    		<option value="all">All</option>
    		<option value="audio">Audio Recordings</option>
@@ -131,7 +135,9 @@ header("Location:index.php");
    		<option value="scalar">Scalar Data</option>
    	</select> <br/>
    	Location: <input type ="input" name="location"/> <br/>
-   	<br/>
+   	
+   	<!--Date range forms -->
+  		<br/>
    	(Input dates in the form d/m/yyyy Hours:minutes:seconds) <br/>
    	Start Date of Records: <input type="date" name="startdate" value ="20/09/2014 22:10:26" /> <br/>
    	End Date of Records: <input type="date" name="enddate" value = '<?php echo date("d/m/Y H:i:s");  ?>' /> <br/>
@@ -214,8 +220,8 @@ header("Location:index.php");
 	$("#logout").click(function(){
 			window.location.href = "login.php?status=logout";
   		});
-  	//Handing the add users
   	
+  	//Handing fade in and outs for forms with button clicks
   	var Password = false;
   	var Personal = false;	
   	$("#btnChangePassword").click(function () {

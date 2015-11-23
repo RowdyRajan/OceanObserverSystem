@@ -1,4 +1,5 @@
 <?php
+	//Sends user to the correct page id already logged in
 	if(isset($_COOKIE['Status']) && $_COOKIE['Status'] == "LoggedIn" 
 	&& isset($_COOKIE["Role"]) && isset($_COOKIE["Person"]) ){
 		$role = $_COOKIE["Role"];		
