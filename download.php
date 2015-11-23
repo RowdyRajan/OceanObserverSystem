@@ -25,9 +25,8 @@
 		oci_close($conn);
 		/*
 		//If no blob data is found 
-		if(!$row){
+		if(!$row[0]){
 			echo 'Alert("No recorded data found in the database")';
-			echo 'made it in?';
 			header("Location:searchsensors.php");
 			exit();
 		}
