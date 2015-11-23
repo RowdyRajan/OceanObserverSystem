@@ -50,9 +50,9 @@ AND	t.time_id LIKE c.date_created;
 
 commit;
 
-SELECT f.sensor_id, s.location, t.year, AVG(f.svalue), MIN(f.svalue), MAX(f.svalue)
-FROM fact f, sensors s, time t
-WHERE s.sensor_id = f.sensor_id
-AND f.time_id = t.time_id
-GROUP BY f.sensor_id, s.location, t.year;
-	
+INSERT INTO persons (person_id, first_name, last_name, address, email, phone)
+VALUES('1', 'David', 'Admin', '1122 BoogieWoogie Ave', 'davidadmin@test.ca', '7801258764');
+commit;
+INSERT INTO users(user_name, password, role, person_id, date_registered)
+VALUES('admin', 'admin', 'a', '1', TO_DATE('11/25/2015', 'MM/DD/YYYY'));
+commit;

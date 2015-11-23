@@ -145,7 +145,7 @@ header("Location:index.php");
 			<TD> <?php echo $row[5];?> </TD>
 			<TD> <?php 	echo '<form name = "download_scalar" method ="post" action="downloadscalars.php">
 									<input type="hidden" name="scalars" value="'.$scalars[$row[3]].'" />	
-									<input type = "submit" value="Downaload"/>
+									<input type = "submit" value="Download"/>
 									</form>'; ?>
 			</tr>
 			<?php } ?>
@@ -154,7 +154,7 @@ header("Location:index.php");
 		<?php 		
 		echo '<form name = "download_scalar" method ="post" action="downloadscalars.php">
 									<input type="hidden" name="scalars" value="'.implode("_", $scalars).'" />	
-									<input type = "submit" value="Downaload All Scalars"/>
+									<input type = "submit" value="Download All Scalars"/>
 									</form>'; ?>		
 		 	
 <?php
