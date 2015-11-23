@@ -418,7 +418,7 @@ function showDownload($id, $ext){
 			<input type="hidden" name="id" value="'.(int)$id.'" />	
 			<input type="hidden" name="data" value="'.$data.'" />
 			<input type="hidden" name="ext" value="'.$ext.'" />
-			<input type = "submit" value="Downaload"/>
+			<input type = "submit" value="Download"/>
 			</form>';
 }		
 ?>		

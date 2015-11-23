@@ -32,7 +32,8 @@
 		}
 		*/
 		if($ext == 'jpg'){
-			$im = imagecreatefromstring($row[0]);
+			$imageData = base64_decode($row[0]);
+			$im = imagecreatefromstring($imageData);
 			ob_start();
     		imagejpeg($im);
     		$data = ob_get_clean();
@@ -54,8 +55,8 @@
     	//imagejpeg($im);
 		print($data);
 		
-		header("Location:searchsensors.php");
-		exit();	
+		//header("Location:searchsensors.php");
+		//exit();	
 	}
 	else{
 		header("Location:index.php");		 

@@ -32,7 +32,7 @@ header("Location:index.php");
 			display: none;		
 		}
 		
-		#divAddNewUser{
+		#divAddExistingUser{
 			display: none;		
 		}
 		#divUpdateUser{
