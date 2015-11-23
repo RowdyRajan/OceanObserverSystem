@@ -32,7 +32,10 @@
 				$row = oci_fetch_array($stid, OCI_ASSOC);
 				$selectedRow = $row;
 
-		 		if($row == NULL){echo '<h2>Incorrect username or password!</h2>';}
+		 		if($row == NULL){
+					header('Refresh: 3; url = index.php');		 			
+		 			echo '<h2>Incorrect username or password!</h2>';
+		 			exit;}
 
 		 		elseif($_POST['confirm'] == "Log In") {
 		 			

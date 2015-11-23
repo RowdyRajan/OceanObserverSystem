@@ -43,8 +43,7 @@ header("Location:index.php");
  	 <button id="logout">Log out</button>
   </ul>
   <div id="tabs-1">
-   	Subscribtions:
-	</body>
+   	Subscriptions:
         <?php 
 		$table = 0;
 		while ($table < 2){
@@ -141,6 +140,38 @@ header("Location:index.php");
   </div>
   <div id="tabs-3">
     Data analysis report generating go here!
+    
+	<?php 
+		   //establish connection
+			   $conn=connect();
+			   $sql = null;		   
+				$sql = '	SELECT 		s.sensor_id
+							FROM 			sensors s, persons p, subscriptions u
+							WHERE 		s.sensor_id = u.sensor_id
+							AND 			p.person_id = u.person_id
+							AND			s.sensor_type = \'s\'
+							AND			p.person_id = '.$_COOKIE['Person'].'
+							GROUP BY		s.sensor_id';
+			   //Prepare sql using conn and returns the statement identifier
+			   $stidd = oci_parse($conn, $sql );
+			   
+			   //Execute a statement returned from oci_parse()
+			   $res=oci_execute($stidd, OCI_DEFAULT); 
+			   
+			   //if error, retrieve the error using the oci_error() function & output an error
+			   if (!$res) {
+					$err = oci_error($stidd);
+					echo htmlentities($err['message']);
+			   } 
+		?>
+			<form name = "getYearly" method ="post" action="getYearly.php">
+				<select name="sensor">
+					<?php while ($row = oci_fetch_array($stidd, OCI_ASSOC)) { ?>
+						<?php echo '<option value ="'.$row['SENSOR_ID'].'" > '.$row['SENSOR_ID'].' </option>'; }?>
+				</select>
+				<input type = "submit" name = "getYearly" value = "Get Sensors Reports" />
+			</form>
+			
   </div>
   <div id="tabs-4">
   	<h3 class="subheaders">Change User Password/Personal Information</h3>
