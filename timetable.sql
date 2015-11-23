@@ -4,7 +4,7 @@ DROP TABLE time;
 CREATE TABLE time(
 	time_id		date,
 	day		char(1),
-	week		varchar(2),
+	week		varchar(5),
 	month		varchar(2),
 	quarter		char(1),
 	year		varchar(4),
@@ -16,7 +16,7 @@ INSERT INTO time ( time_id, day, week, month, quarter, year )
 SELECT
 	TRUNC ( sd + rn ) time_id,
 	TO_CHAR( sd + rn, 'D' ) day,
-	TO_CHAR( sd + rn, 'W' ) week,
+	TO_CHAR(ceil((TO_NUMBER(TO_CHAR(sd+rn, 'DD')) - 1 + TO_NUMBER(TO_CHAR(sd+rn-TO_CHAR(sd+rn, 'DD')+1, 'D')))/7)) week,
 	TO_CHAR( sd + rn, 'MM' ) month,
 	TO_CHAR( sd + rn, 'Q' ) quarter,
 	TO_CHAR( sd + rn, 'YYYY' ) year

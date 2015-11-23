@@ -90,7 +90,6 @@
 	    				} ?>
 				</TABLE>
 
-      		CONNECT BY level <= 6575
 				<a href="index.php">
    				<input type="button" value="Return to Userpage" />
 				</a>
