@@ -50,21 +50,18 @@ header("Location:index.php");
 			$table = $table+1;      
 		   //establish connection
 			   $conn=connect();
-
 			   $sql = null;	
+			   //the first table shows the subscribed sensors
 			   if ($table == 1){		   
 					$sql = 'SELECT * FROM sensors WHERE sensor_id IN(SELECT sensor_id FROM subscriptions WHERE person_id = '.$_COOKIE['Person'].')';
-				//the second table shows the unscribed sensors
+				//the second table shows the unsubcribed sensors
 			   } elseif ($table == 2){
 					$sql = 'SELECT * FROM sensors WHERE sensor_id NOT IN(SELECT sensor_id FROM subscriptions WHERE person_id = '.$_COOKIE['Person'].')';
 			   }
-			   
 			   //Prepare sql using conn and returns the statement identifier
 			   $stid = oci_parse($conn, $sql );
-			   
 			   //Execute a statement returned from oci_parse()
 			   $res=oci_execute($stid, OCI_DEFAULT); 
-			   
 			   //if error, retrieve the error using the oci_error() function & output an error
 			   if (!$res) {
 					$err = oci_error($stid);
@@ -94,13 +91,17 @@ header("Location:index.php");
 							?> </TD>
 				<TD> <?php echo $row['DESCRIPTION']; ?> </TD>
 				<TD> <?php if ($table == 1){
-					echo '<form name = "unsubscribe" method ="post" action="unsubscribe.php">
+					//For unsubscribing
+					echo '<form name = "unsubscribe" method ="post" action="subscribe.php">
 					<input type="hidden" name="sensor_id" value="' . (int)$row['SENSOR_ID'] . '" />
+					<input type="hidden" name="subscribing?" value="false" />
 					<input type = "submit" value="Unsubscribe"/>
 					</form>'; 
 					} else if ($table = 2){ 
+					//For subscibing
 					echo '<form name = "subscribe" method ="post" action="subscribe.php">
 					<input type="hidden" name="sensor_id" value="' . (int)$row['SENSOR_ID'] . '" />
+					<input type="hidden" name="subscribing?" value="true" />
 					<input type = "submit" value="Subscribe"/>
 					</form>';
 					}
