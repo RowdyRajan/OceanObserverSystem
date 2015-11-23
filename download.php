@@ -32,7 +32,8 @@
 		}
 		*/
 		if($ext == 'jpg'){
-			$im = imagecreatefromstring($row[0]);
+			$imageData = base64_decode($row[0]);
+			$im = imagecreatefromstring($imageData);
 			ob_start();
     		imagejpeg($im);
     		$data = ob_get_clean();
