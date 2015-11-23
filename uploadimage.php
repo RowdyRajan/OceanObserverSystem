@@ -133,7 +133,7 @@ else if(isset($_POST['sensor_id']) && isset($_POST['image_id'])) //&& isset($_PO
 				echo '<br/>';
 				printf('<img src="data:image/jog;base64,%s"/>', base64_encode($thumb));
 				echo '<br/><br/>';
-				printf('<img src="data:image/jog;base64,%s"/>', base64_encode($image));
+				printf('<img src="data:image/jog;base64,%s"/>', $image);
 			}
 		}
 		oci_free_statement($stid);

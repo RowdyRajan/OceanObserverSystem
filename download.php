@@ -32,17 +32,12 @@
 		}
 		*/
 		if($ext == 'jpg'){
-			$imageData = base64_decode($row[0]);
-			$im = imagecreatefromstring($imageData);
-			ob_start();
-    		imagejpeg($im);
-    		$data = ob_get_clean();
+			$data = base64_decode($row[0]);
     	}
     	else if($ext == 'wav'){
     		$data = $row[0];
     	}
     	ob_clean();
-		//$size = strlen($im);
 		header('Content-Description: File Transfer');
     	header('Content-Type: octet-stream');
     	header('Content-Disposition: attachment; filename="'.$id.'.'.$ext.'"');
@@ -50,9 +45,7 @@
     	header('Cache-Control: must-revalidate');
     	header('Pragma: public');
     	header("Content-Transfer-Encoding: binary");
-    	//header('Content-Length: ' . size);
-    	//echo $data;
-    	//imagejpeg($im);
+
 		print($data);
 		
 		header("Location:searchsensors.php");
