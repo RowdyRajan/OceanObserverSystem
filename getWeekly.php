@@ -9,6 +9,7 @@ header("Location:index.php");
 	<div>
 		<?php
 			if(isset($_POST['getWeekly'])){
+				include	("PHPconnectionDB.php");
 				$conn= connect();		   
 				//Aggregate data from fact table into rows based on year, quarter, and month (will provide at most 5 weeks)
 				$sql = '	SELECT 	f.sensor_id, s.location, t.year, t.quarter, t.month, t.week, AVG(f.svalue), MIN(f.svalue), MAX(f.svalue)

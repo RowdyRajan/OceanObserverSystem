@@ -9,6 +9,7 @@ header("Location:index.php");
 	<div>
 		<?php
 			if(isset($_POST['getQuarterly'])){
+				include	("PHPconnectionDB.php");
 				$conn= connect();
 				//Aggregate data from fact table into rows based on year (will provide at most 4 quarters)   
 				$sql = '	SELECT 	f.sensor_id, s.location, t.year, t.quarter, AVG(f.svalue), MIN(f.svalue), MAX(f.svalue)

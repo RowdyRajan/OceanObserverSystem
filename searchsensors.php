@@ -117,6 +117,14 @@ header("Location:index.php");
 <?php
 			//If the search type was just scalar
 			} elseif($type == "scalar"){
+				
+				//If no keywords
+			if($keywords == ""){
+				$keywordParam = ""; 
+			//If there are keywords create the correct value to put in the query 
+			}else {
+				$keywordParam = "AND S.description = '".$keywords."'";  			
+			}
 			
 			//code for formating date taken from https://community.oracle.com/thread/312115?start=0&tstart=0
 			 $sql = "Select S.sensor_id, S.location, S.description, SC.id, to_char(SC.date_created, 'dd/mm/yyyy hh24:mi:ss') datetime, SC.value
@@ -126,7 +134,7 @@ header("Location:index.php");
 			 			AND U.sensor_id = S.sensor_id
 						AND SC.sensor_id = S.sensor_id
 						AND (SC.date_created BETWEEN to_date('".$startDate."', 'DD/MM/YYYY HH24:MI:SS') AND to_date('".$endDate."', 'DD/MM/YYYY HH24:MI:SS'))
-						".$locationParam;
+						".$locationParam.$keywordParam;
 				
 				
 				$conn = connect();
@@ -284,6 +292,13 @@ header("Location:index.php");
 		 			exit;
 		 		}
 		 		
+		 			//If no keywords
+				if($keywords == ""){
+					$keywordParam = ""; 
+				//If there are keywords create the correct value to put in the query 
+				}else {
+					$keywordParam = "AND S.description = '".$keywords."'";  			
+				}
 		 		//Finding scalar values 
 		 	   $sql2 = "Select S.sensor_id, S.location, S.description, SC.id, to_char(SC.date_created, 'dd/mm/yyyy hh24:mi:ss') datetime, SC.value
 			 			FROM sensors S, scalar_data SC, subscriptions U 
@@ -292,7 +307,7 @@ header("Location:index.php");
 			 			AND U.sensor_id = S.sensor_id
 						AND SC.sensor_id = S.sensor_id
 						AND (SC.date_created BETWEEN to_date('".$startDate."', 'DD/MM/YYYY HH24:MI:SS') AND to_date('".$endDate."', 'DD/MM/YYYY HH24:MI:SS'))
-						".$locationParam;
+						".$locationParam.$keywordParam;
 				
 				
 				

@@ -87,6 +87,36 @@ foreach ($scalars as &$row) {
 		}
 	}
 }
+
+$conn=connect();
+$sql = 			
+'DROP TABLE fact';
+$stid = oci_parse($conn, $sql);
+$res=oci_execute($stid);
+$res = oci_commit($conn);
+
+$sql = 'CREATE TABLE fact(
+		sensor_id	int,
+		id		int,
+		time_id		date,
+		svalue		float,
+		PRIMARY KEY (sensor_id, id, time_id),
+		FOREIGN KEY (sensor_id) REFERENCES sensors,
+		FOREIGN KEY (id) REFERENCES scalar_data,
+		FOREIGN KEY (time_id) REFERENCES time)';
+$stid = oci_parse($conn, $sql);
+$res=oci_execute($stid);
+$res = oci_commit($conn);
+
+$sql = 			
+'INSERT INTO fact ( sensor_id, id, time_id, svalue)
+SELECT	s.sensor_id, c.id, t.time_id, c.value
+FROM	sensors s, scalar_data c, time t
+WHERE	s.sensor_id = c.sensor_id
+AND	t.time_id LIKE c.date_created';
+$stid = oci_parse($conn, $sql);
+$res=oci_execute($stid);
+$res = oci_commit($conn);
 			
 ?>
 <form name = "return" method = "post" action ="index.php">

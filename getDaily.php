@@ -9,6 +9,7 @@ header("Location:index.php");
 	<div>
 		<?php
 			if(isset($_POST['getDaily'])){
+				include	("PHPconnectionDB.php");
 				//Aggregate data from fact table into rows based on year, quarter, month, and week (will provide at most 7 days)
 				$conn= connect();		   
 				$sql = '	SELECT 	f.sensor_id, s.location, t.year, t.quarter, t.month, t.week, t.time_id , AVG(f.svalue), MIN(f.svalue), MAX(f.svalue)

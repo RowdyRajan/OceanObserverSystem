@@ -9,6 +9,7 @@ header("Location:index.php");
 	<div>
 		<?php
 			if(isset($_POST['getMonthly'])){
+				include	("PHPconnectionDB.php");
 				$conn= connect();
 				//Aggregate data from fact table into rows based on year, and quarter (will provide at most 12 months)
 				$sql = '	SELECT 	f.sensor_id, s.location, t.year, t.quarter, t.month, AVG(f.svalue), MIN(f.svalue), MAX(f.svalue)

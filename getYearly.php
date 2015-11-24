@@ -9,6 +9,7 @@ header("Location:index.php");
 	<div>
 		<?php
 			if(isset($_POST['getYearly'])){
+				include	("PHPconnectionDB.php");
 				$conn= connect();		   
 				//Aggregate data from fact table into rows (will provide every year present in sensor's data)
 				$sql = '	SELECT 	f.sensor_id, s.location, t.year, AVG(f.svalue), MIN(f.svalue), MAX(f.svalue)
