@@ -1,0 +1,705 @@
+<!-- Converted to clean HTML using  http://word2cleanhtml.com -->
+<p dir="ltr" id="docs-internal-guid-f5bf2220-3738-73be-73ed-2cb764879e08">
+    Installation Guideline
+</p>
+<br/>
+<p dir="ltr">
+    The program is built to be used on the <a href="http://consort.cs.ualberta.ca">http://consort.cs.ualberta.ca</a> webserver. In order to install, the
+    following steps should be followed:
+</p>
+<p dir="ltr">
+    1. Unzip the system file.
+</p>
+<p dir="ltr">
+    2. Copy the contents of the "code" directory to /compsci/webdocs/&lt;yourccid&gt;/web_docs/OceanObservationSystem/
+</p>
+<p dir="ltr">
+    3. Set the permissions for all of the files to 644 (read only for others) except for scalarid.txt, download.php, downloadscalars.php, uploadaudio.php,
+    uploadimage.php, uploadscalars.php which needs to be set to 666 (read and write for everyone).
+</p>
+<p dir="ltr">
+    4. Modify line 3 of PHPconnectionDB.php to be:
+</p>
+<p dir="ltr">
+    $conn = oci_connect('SQLPLUS USERNAME', 'SQLPLUS PASSWORD')
+</p>
+<p dir="ltr">
+    Where SQLPLUS USERNAME is replaced with your sqlplus username and SQLPLUS PASSWORD is replaced with your sqlplus password.
+</p>
+<p dir="ltr">
+    5. Run setup.sql and then timetable.sql into sqlplus using the same account that was put into the PHPconnectionDB.php.
+</p>
+<br/>
+<p dir="ltr">
+    The system should now be functional. In order to access it open up a browser (firefox is recommended) on any university of alberta computer sciences lab
+    computer and go to http://consort.cs.ualberta.ca/~&lt;your-ccid&gt;/OceanObserverSystem/index.php and log in as default administrator (u: admin, p: admin).
+</p>
+<br/>
+<p dir="ltr">
+    Login Module
+</p>
+<br/>
+<p dir="ltr">
+    The login module will always appear as the only webpage available as long as the websession is in a logged out state (no cookies are present, and all other
+    pages redirect to the log in). Enter your username and password and select the "Log In" button to log in. The page you are redirected to is based on your
+    user's role (scientist, data curator or administrator).
+</p>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<p dir="ltr">
+    Sensor Management
+</p>
+<br/>
+<p dir="ltr">
+    The "Sensor Management" tab allows an administrator to add or remove sensors from the observation system:
+</p>
+<ul>
+    <li dir="ltr">
+        <p dir="ltr">
+            Add Sensors:
+        </p>
+    </li>
+    <ul>
+        <li dir="ltr">
+            <p dir="ltr">
+                4 fields must be filled to successfully add a sensor to the database:
+            </p>
+        </li>
+        <ul>
+            <li dir="ltr">
+                <p dir="ltr">
+                    "Enter Sensor ID:" requires a number that has yet been used to signify the sensor's identification number.
+                </p>
+            </li>
+            <li dir="ltr">
+                <p dir="ltr">
+                    "Enter Location:" requires the location the sensor has been placed
+                </p>
+            </li>
+            <li dir="ltr">
+                <p dir="ltr">
+                    "Enter Description:" requires a brief description of what the sensor is required to perform.
+                </p>
+            </li>
+            <li dir="ltr">
+                <p dir="ltr">
+                    "Type:" is a radio button selection to provide one of the three forms of sensor operation: Audio, Image or Scalar data.
+                </p>
+            </li>
+        </ul>
+    </ul>
+</ul>
+<ul>
+    <ul>
+        <li dir="ltr">
+            <p dir="ltr">
+                Selecting the "Add Sensor" button will insert the new sensor into the observation system's database.
+            </p>
+        </li>
+    </ul>
+</ul>
+<ul>
+    <li dir="ltr">
+        <p dir="ltr">
+            Remove Sensors:
+        </p>
+    </li>
+    <ul>
+        <li dir="ltr">
+            <p dir="ltr">
+                1 field must be filled to successfully remove a sensor to the database:
+            </p>
+        </li>
+        <ul>
+            <li dir="ltr">
+                <p dir="ltr">
+                    "Enter Sensor Id:" requires the ID number of an existing sensor.
+                </p>
+            </li>
+        </ul>
+    </ul>
+</ul>
+<ul>
+    <ul>
+        <li dir="ltr">
+            <p dir="ltr">
+                Selecting the "Remove Sensor" button will delete the sensor from the database.
+            </p>
+        </li>
+    </ul>
+</ul>
+<br/>
+<p dir="ltr">
+    User Management
+</p>
+<br/>
+<p dir="ltr">
+    The "User Management" tab allows an administrator to add, delete and update users from the database:
+</p>
+<ul>
+    <li dir="ltr">
+        <p dir="ltr">
+            Add Users:
+        </p>
+    </li>
+    <ul>
+        <li dir="ltr">
+            <p dir="ltr">
+                Add New User:
+            </p>
+        </li>
+        <ul>
+            <li dir="ltr">
+                <p dir="ltr">
+                    9 fields must be filled to successfully add a new user to the database:
+                </p>
+            </li>
+            <ul>
+                <li dir="ltr">
+                    <p dir="ltr">
+                        "Enter new username:" requires a new username
+                    </p>
+                </li>
+                <li dir="ltr">
+                    <p dir="ltr">
+                        "Enter new users password:" requires the new users default password.
+                    </p>
+                </li>
+                <li dir="ltr">
+                    <p dir="ltr">
+                        "Enter new personID:" requires a unique, new person ID number
+                    </p>
+                </li>
+                <li dir="ltr">
+                    <p dir="ltr">
+                        "Enter first name:" requires the new user's first name
+                    </p>
+                </li>
+                <li dir="ltr">
+                    <p dir="ltr">
+                        "Enter Last Name:" requires the new user's last name
+                    </p>
+                </li>
+                <li dir="ltr">
+                    <p dir="ltr">
+                        "Enter Address:" requires the new user's address
+                    </p>
+                </li>
+                <li dir="ltr">
+                    <p dir="ltr">
+                        "Enter email" requires the new user's email address (NOTE: Must be a unique email address from all other persons!)
+                    </p>
+                </li>
+                <li dir="ltr">
+                    <p dir="ltr">
+                        "Enter phone number" requires the new user's 10-digit phone number
+                    </p>
+                </li>
+                <li dir="ltr">
+                    <p dir="ltr">
+                        "Select role:" is a radio button selection to provide one of the three forms of user: Administrator, Scientist, or Data Curator.
+                    </p>
+                </li>
+            </ul>
+        </ul>
+        <li dir="ltr">
+            <p dir="ltr">
+                Add Existing User:
+            </p>
+        </li>
+        <ul>
+            <li dir="ltr">
+                <p dir="ltr">
+                    4 fields must be filled to successfully add a user for an existing person into the database:
+                </p>
+            </li>
+            <ul>
+                <li dir="ltr">
+                    <p dir="ltr">
+                        "Enter email" requires the existing person's email address
+                    </p>
+                </li>
+                <li dir="ltr">
+                    <p dir="ltr">
+                        "Enter new username:" requires a new username
+                    </p>
+                </li>
+                <li dir="ltr">
+                    <p dir="ltr">
+                        "Enter new users password:" requires the new users default password.
+                    </p>
+                </li>
+                <li dir="ltr">
+                    <p dir="ltr">
+                        "Select role:" is a radio button selection to provide one of the three forms of user: Administrator, Scientist, or Data Curator.
+                    </p>
+                </li>
+            </ul>
+        </ul>
+    </ul>
+    <li dir="ltr">
+        <p dir="ltr">
+            Delete Users:
+        </p>
+    </li>
+    <ul>
+        <li dir="ltr">
+            <p dir="ltr">
+                Delete a User:
+            </p>
+        </li>
+        <ul>
+            <li dir="ltr">
+                <p dir="ltr">
+                    1 field required to delete a user:
+                </p>
+            </li>
+            <ul>
+                <li dir="ltr">
+                    <p dir="ltr">
+                        "Enter Username you wish to delete:" requires the username of the user you would like to remove
+                    </p>
+                </li>
+            </ul>
+        </ul>
+        <li dir="ltr">
+            <p dir="ltr">
+                Delete a person:
+            </p>
+        </li>
+        <ul>
+            <li dir="ltr">
+                <p dir="ltr">
+                    1 field required to delete a person:
+                </p>
+            </li>
+            <ul>
+                <li dir="ltr">
+                    <p dir="ltr">
+                        "Enter the email of person you wish to delete:" requires the email of the person you would like to remove. This will remove both the
+                        person and users of person from the database.
+                    </p>
+                </li>
+            </ul>
+        </ul>
+    </ul>
+    <li dir="ltr">
+        <p dir="ltr">
+            Update User Information:
+        </p>
+    </li>
+    <ul>
+        <li dir="ltr">
+            <p dir="ltr">
+                Change User Password:
+            </p>
+        </li>
+        <ul>
+            <li dir="ltr">
+                <p dir="ltr">
+                    3 fields required to change a user's password. If the new passwords match in both fields, the password will change for the user:
+                </p>
+            </li>
+            <ul>
+                <li dir="ltr">
+                    <p dir="ltr">
+                        "Enter Username:" requires the username of the user that would wish to have their password changed.
+                    </p>
+                </li>
+                <li dir="ltr">
+                    <p dir="ltr">
+                        "Enter New Password:" requires the new password
+                    </p>
+                </li>
+                <li dir="ltr">
+                    <p dir="ltr">
+                        "Re-enter New Password:" requires the same password as the previous field.
+                    </p>
+                </li>
+            </ul>
+        </ul>
+        <li dir="ltr">
+            <p dir="ltr">
+                Change User's Role:
+            </p>
+        </li>
+        <ul>
+            <li dir="ltr">
+                <p dir="ltr">
+                    2 fields required to change a user's role:
+                </p>
+            </li>
+            <ul>
+                <li dir="ltr">
+                    <p dir="ltr">
+                        "Enter Username:" requires the username of the user that would wish to have their role changed.
+                    </p>
+                </li>
+                <li dir="ltr">
+                    <p dir="ltr">
+                        "Enter New Role:" is a dropdown list of roles the user can be changed to.
+                    </p>
+                </li>
+            </ul>
+        </ul>
+        <li dir="ltr">
+            <p dir="ltr">
+                Change Person's Information:
+            </p>
+        </li>
+        <ul>
+            <li dir="ltr">
+                <p dir="ltr">
+                    1 field required:
+                </p>
+            </li>
+            <ul>
+                <li dir="ltr">
+                    <p dir="ltr">
+                        "Enter Email of Person:" requires the email of the person you would like to change their personal information. This will direct to
+                        another page to enter person's changed information.
+                    </p>
+                </li>
+            </ul>
+        </ul>
+    </ul>
+</ul>
+<br/>
+<p dir="ltr">
+    Account Settings
+</p>
+<br/>
+<p dir="ltr">
+    The "Account Settings" tab allows all users to change their respective passwords and personal information:
+</p>
+<ul>
+    <li dir="ltr">
+        <p dir="ltr">
+            Change Password:
+        </p>
+    </li>
+    <ul>
+        <li dir="ltr">
+            <p dir="ltr">
+                2 fields required:
+            </p>
+        </li>
+        <ul>
+            <li dir="ltr">
+                <p dir="ltr">
+                    "Enter New Password:" requires a new password
+                </p>
+            </li>
+            <li dir="ltr">
+                <p dir="ltr">
+                    "Re-enter New Password:" requires the same password as the previous field. The password will only change if both fields have matching
+                    passwords.
+                </p>
+            </li>
+        </ul>
+    </ul>
+</ul>
+<ul>
+    <li dir="ltr">
+        <p dir="ltr">
+            Modify Personal Information
+        </p>
+    </li>
+    <ul>
+        <li dir="ltr">
+            <p dir="ltr">
+                Any field with current content will display information. To modify, 5 fields are required:
+            </p>
+        </li>
+        <ul>
+            <li dir="ltr">
+                <p dir="ltr">
+                    "First Name:" requires first name
+                </p>
+            </li>
+            <li dir="ltr">
+                <p dir="ltr">
+                    "Last Name:" requires last name
+                </p>
+            </li>
+            <li dir="ltr">
+                <p dir="ltr">
+                    "Address:" requires address
+                </p>
+            </li>
+            <li dir="ltr">
+                <p dir="ltr">
+                    "Email:" requires email address (NOTE: Must be a unique email address from all other persons!)
+                </p>
+            </li>
+            <li dir="ltr">
+                <p dir="ltr">
+                    "Phone:" requires a 10-digit phone number
+                </p>
+            </li>
+        </ul>
+    </ul>
+</ul>
+<br/>
+<p dir="ltr">
+    Subscribe
+</p>
+<p dir="ltr">
+    The "Subscribe" tab allows scientists to subscribe and unsubscribe from available sensors within the ocean observation system:
+</p>
+<ul>
+    <li dir="ltr">
+        <p dir="ltr">
+            Subscriptions: A list of sensors you are currently subscribed to receive data from. Sensors will display their ID, location, sensor type, and
+            description. Each sensor will also contain an "Unsubscribe" button. Selecting this button will unsubscribe you from the sensor, and it will appear
+            under "Other Sensors".
+        </p>
+    </li>
+    <li dir="ltr">
+        <p dir="ltr">
+            Other Sensors: A list of sensors you are currently not subscribe to receive data from. Sensors will display their ID, location, sensor type, and
+            description. Each sensor will also contain a "Subscribe" button. Selecting this button will Subscribe you to the sensor, and it will appear under
+            "Subscriptions".
+        </p>
+    </li>
+</ul>
+<br/>
+<br/>
+<p dir="ltr">
+    Search
+</p>
+<p dir="ltr">
+    The "Search" tab allows scientists to search the system for records provided by their subscribed sensors between time periods. The search will also allow a
+    scientist to preview and download data from the sensors:
+</p>
+<ul>
+    <li dir="ltr">
+        <p dir="ltr">
+            5 fields are allowed to be inputted to specify searches:
+        </p>
+    </li>
+    <ul>
+        <li dir="ltr">
+            <p dir="ltr">
+                "Keywords:" Any specific string of text that can appear in either the sensor's general description, or the audio or image description.
+            </p>
+        </li>
+        <li dir="ltr">
+            <p dir="ltr">
+                "Sensor types:" Selection of sensors (Audio, Image, Scalar Data, or All(.
+            </p>
+        </li>
+        <li dir="ltr">
+            <p dir="ltr">
+                "Location:" Location of sensor
+            </p>
+        </li>
+        <li dir="ltr">
+            <p dir="ltr">
+                "Start Date of Records:" required start date of record search.
+            </p>
+        </li>
+        <li dir="ltr">
+            <p dir="ltr">
+                "End Date of Records:" required end date of record search.
+            </p>
+        </li>
+    </ul>
+</ul>
+<ul>
+    <li dir="ltr">
+        <p dir="ltr">
+            Pressing "Search Records" will send you to results page, detailing all records matching search requirements. All records will display the sensor
+            ID, location, sensor description, specific record id, and the date created
+        </p>
+    </li>
+    <ul>
+        <li dir="ltr">
+            <p dir="ltr">
+                Images will display a thumbnail of image records. Selecting "download" will download the image as a .jpg file.
+            </p>
+        </li>
+        <li dir="ltr">
+            <p dir="ltr">
+                Scalar Data will display the value of the data. Selecting "Downaload" will download the scalar data as a .csv file. Selecting "Downaload All
+                Scalars" at the bottom of the table will download all combined sensor records as a single .csv file.
+            </p>
+        </li>
+        <li dir="ltr">
+            <p dir="ltr">
+                Audio will display the audio length (in seconds). Selecting "Download" will download the audio as a .wav file.
+            </p>
+        </li>
+    </ul>
+</ul>
+<br/>
+<p dir="ltr">
+    Data Analysis Report
+</p>
+<p dir="ltr">
+    The "Data Analysis Report" tab allows scientists to select and view scalar data's average, minimum, and maximum values within a generalized date:
+</p>
+<ul>
+    <li dir="ltr">
+        <p dir="ltr">
+            The drop down menu displays all scalar sensors you are subscribed to. Select the sensor you would like to analyze, and select "Get Sensors Reports"
+        </p>
+    </li>
+    <li dir="ltr">
+        <p dir="ltr">
+            The next page that appears will display the sensors id, location, and separated average, minimum, and maximum values by year.
+        </p>
+    </li>
+    <ul>
+        <li dir="ltr">
+            <p dir="ltr">
+                Selecting the Year button will drill down the scalar sensors data by each quarter of the year.
+            </p>
+        </li>
+        <li dir="ltr">
+            <p dir="ltr">
+                You can continue to drill down from year, to quarter of year, to month of quarter, to week of month, to day of week.
+            </p>
+        </li>
+        <li dir="ltr">
+            <p dir="ltr">
+                At any time you may select other buttons to re-generalized to that specific time period
+            </p>
+        </li>
+        <li dir="ltr">
+            <p dir="ltr">
+                At any time you may select the "Return to Userpage" to return to the Scientist Dashboard.
+            </p>
+        </li>
+    </ul>
+</ul>
+<p dir="ltr">
+    Upload Module
+</p>
+<p dir="ltr">
+    The "Upload" tab allows data curators to upload image files, audio files, and batch scalar csv files to the database. To upload a certain type of content
+    click the corresponding button and fill out the required fields.
+</p>
+<ul>
+    <li dir="ltr">
+        <p dir="ltr">
+            Upload Image
+        </p>
+    </li>
+    <ul>
+        <li dir="ltr">
+            <p dir="ltr">
+                There are four required fields and one optional field needed to add a image
+            </p>
+        </li>
+        <li dir="ltr">
+            <p dir="ltr">
+                "Image ID:" requires a unique image Id number
+            </p>
+        </li>
+        <li dir="ltr">
+            <p dir="ltr">
+                "Sensor ID:" requires the id for an existing image sensor
+            </p>
+        </li>
+        <li dir="ltr">
+            <p dir="ltr">
+                "Date Created:" requires a date for when the image was created in the form of dd/mm/yyyy hours(24):minutes:seconds. This will be autofilled
+                with the current time (the time the current page was loaded)
+            </p>
+        </li>
+        <li dir="ltr">
+            <p dir="ltr">
+                "Description:" is an optional field that allows you to put in a string describing the image
+            </p>
+        </li>
+        <li dir="ltr">
+            <p dir="ltr">
+                "File:" is the image file you wish to load to the database. It must be in the form of a png. If browse is clicked the user will be prompted to
+                select a file from their file system
+            </p>
+        </li>
+    </ul>
+    <li dir="ltr">
+        <p dir="ltr">
+            Upload Audio
+        </p>
+    </li>
+    <ul>
+        <li dir="ltr">
+            <p dir="ltr">
+                There are four required fields and two optional fields needed to add an audio file
+            </p>
+        </li>
+        <li dir="ltr">
+            <p dir="ltr">
+                "Recording ID:" requires a unique recording Id number
+            </p>
+        </li>
+        <li dir="ltr">
+            <p dir="ltr">
+                "Sensor ID:" requires the id for an existing audio sensor
+            </p>
+        </li>
+        <li dir="ltr">
+            <p dir="ltr">
+                "Date Created:" requires a date for when the audio was created in the form of dd/mm/yyyy hours(24):minutes:seconds. This will be autofilled
+                with the current time (the time the current page was loaded)
+            </p>
+        </li>
+        <li dir="ltr">
+            <p dir="ltr">
+                "Description:" is an optional field that allows you to put in a string describing the image
+            </p>
+        </li>
+        <li dir="ltr">
+            <p dir="ltr">
+                "Length:" is an optional field that allows you to put a numeric value that represents the length of the audio file
+            </p>
+        </li>
+        <li dir="ltr">
+            <p dir="ltr">
+                "File:" is the audio file you wish to load to the database. It must be in the form of a wav. If browse is clicked the user will be prompted to
+                select a file from their file system
+            </p>
+        </li>
+    </ul>
+    <li dir="ltr">
+        <p dir="ltr">
+            Upload Scalars
+        </p>
+    </li>
+    <ul>
+        <li dir="ltr">
+            <p dir="ltr">
+                The scalar upload allows you to upload a scalar data in the form of a csv file. Each line of the given csv file will represent one scalar data
+                recording so multiple scalar information can be uploaded at once.
+            </p>
+        </li>
+        <li dir="ltr">
+            <p dir="ltr">
+                "File:" is the csv file you wish to load to the database. If browse is clicked the user will be prompted to select a file from their file
+                system
+            </p>
+        </li>
+        <li dir="ltr">
+            <p dir="ltr">
+                Each line in the csv file must have the form "sensor_id, date created, value" e.g For scalar data from sensor 3,. created on 01/11/2015 at
+                22:34:21 with a value of 4 the csv line would be "3, 01/11/2015 22:34:21,4".
+            </p>
+        </li>
+        <li dir="ltr">
+            <p dir="ltr">
+                Note the sensor Id must be for a scalar sensor
+            </p>
+        </li>
+    </ul>
+</ul>
+<br/>
+<p dir="ltr">
+    Once the submit button is clicked for any data type the user will sent to a page where the status of the upload is shown and can return to the data curator
+    page by clicking the "return to user page" button.
+</p>
