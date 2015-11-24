@@ -8,6 +8,7 @@ header("Location:index.php");
 } 
 ?>
 <head>
+	//Establishes admin dashboard buttons, divs and tabs 
 	<title>Admin Dashboard </title>
 	<script type="text/javascript" src="libraries/jquery-ui/external/jquery/jquery.js"></script>
 	<script type="text/javascript" src="libraries/jquery-ui/jquery-ui.js"></script>
@@ -45,8 +46,6 @@ header("Location:index.php");
 		.ui-tabs {
 			height:100%;			
 		}
-
-		
 		.error{
 			color: red;		
 		}
@@ -76,7 +75,7 @@ header("Location:index.php");
     		$("#tabs").tabs();
   		});
   		
-  		
+
 	</script>
 </head>
 
@@ -149,7 +148,7 @@ header("Location:index.php");
   </div> <!-- end of tab one -->
   <div id="tabs-2">
   <h3 class="subheaders">Add Users</h3>
-  	
+  	<!-- Buttons for adding new users for new and existing people -->
   	<button id="btnAddNewUser"> Add New User</button>
   	<button id="btnAddExistingUser"> Add Existing User </button>
   	<?php
@@ -302,9 +301,12 @@ header("Location:index.php");
 	
   </div> <!-- end of second tab -->
   <div id="tabs-3">
-   	<h3 class="subheaders">Change User Password/Personal Information</h3>
+  <!-- Changing Personal Password and Information -->
+   <h3 class="subheaders">Change User Password/Personal Information</h3>
   	<button id="btnChangePassword"> Change Password</button>
   	<button id="btnChangePerson"> Modify Personal Information </button>
+  	
+  	<!-- Change Password -->
   	<div id="divChangePassword">
 		<?php echo '<h3>Password Change for '.$_COOKIE['Username'].'</h3>';
 		echo '<form name = "changepass" method = "post" action = "changepassword.php">';
@@ -312,8 +314,11 @@ header("Location:index.php");
 		echo 'Repeat New Password: <input type="password" name="password2"/><br/>';
 		echo '<input type = "submit" name = "changepassword" value = "Change Password"/></form>'; ?>
 	</div>
+	
+	<!-- Change Personal Information -->
 	<div id="divChangePerson">
 		<?php 
+			//Pulls current person's credentials, and displays them in fields.
 			$conn=connect();
 			$sqlp = '  	SELECT *
 							FROM persons p
@@ -325,6 +330,8 @@ header("Location:index.php");
 				echo htmlentities($err['message']);
 	 			}		
 		$persons = oci_fetch_row($stidp);
+		
+		//Display current personal data in all fields
 		echo '<h3>Personal Information change for '.$persons[1].' '.$persons[2].' </h3>';
 		echo '<form name = "changeperson" method = "post" action = "changeperson.php">';
 		echo 'First Name: <input type = "text" name="fname" value = '.$persons[1].' /> <br/>';

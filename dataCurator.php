@@ -92,9 +92,12 @@ header("Location:index.php");
 	</div>
   </div>
   <div id="tabs-2">
-   	<h3 class="subheaders">Change User Password/Personal Information</h3>
+  <!-- Changing Personal Password and Information -->
+   <h3 class="subheaders">Change User Password/Personal Information</h3>
   	<button id="btnChangePassword"> Change Password</button>
   	<button id="btnChangePerson"> Modify Personal Information </button>
+  	
+  	<!-- Change Password -->
   	<div id="divChangePassword">
 		<?php echo '<h3>Password Change for '.$_COOKIE['Username'].'</h3>';
 		echo '<form name = "changepass" method = "post" action = "changepassword.php">';
@@ -102,9 +105,12 @@ header("Location:index.php");
 		echo 'Repeat New Password: <input type="password" name="password2"/><br/>';
 		echo '<input type = "submit" name = "changepassword" value = "Change Password"/></form>'; ?>
 	</div>
+	
+	<!-- Change Personal Information -->
 	<div id="divChangePerson">
 		<?php 
 			$conn=connect();
+			//Pulls all personal data
 			$sqlp = '  	SELECT *
 							FROM persons p
 							WHERE p.person_id = \''.$_COOKIE['Person'].'\'';
@@ -115,6 +121,8 @@ header("Location:index.php");
 				echo htmlentities($err['message']);
 	 			}		
 		$persons = oci_fetch_row($stidp);
+		
+		//Display current personal data in all fields
 		echo '<h3>Personal Information change for '.$persons[1].' '.$persons[2].' </h3>';
 		echo '<form name = "changeperson" method = "post" action = "changeperson.php">';
 		echo 'First Name: <input type = "text" name="fname" value = '.$persons[1].' /> <br/>';

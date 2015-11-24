@@ -1,23 +1,16 @@
 <?php
 //Redirects login if not signed in
-if(isset($_COOKIE['Status']) && $_COOKIE['Status'] == "LoggedIn"){	 }
+if(isset($_COOKIE['Status']) && $_COOKIE['Status'] == "LoggedIn" && $_COOKIE["Role"] == 's' ){	 }
 else{
 header("Location:index.php");		 
 } 
 ?>
-<html>
-	<?php
-		include	("PHPconnectionDB.php");
-		if(isset($_COOKIE['Status']) && isset($_COOKIE['Person']) && $_COOKIE['Status'] == "LoggedIn" && $_COOKIE["Role"] == 's' ){	 }
-		else{
-			header("Location:index.php");		 
-		} 
-	?>
-	
+<html>	
 	<div>
 		<?php
 			if(isset($_POST['getYearly'])){
 				$conn= connect();		   
+				//Aggregate data from fact table into rows (will provide every year present in sensor's data)
 				$sql = '	SELECT 	f.sensor_id, s.location, t.year, AVG(f.svalue), MIN(f.svalue), MAX(f.svalue)
 							FROM 		fact f, sensors s, time t, persons p, subscriptions u
 							WHERE 	s.sensor_id = f.sensor_id
@@ -66,6 +59,7 @@ header("Location:index.php");
 						<?php 
 	    				} ?>
 				</TABLE>
+				<!-- Button to send back to User page -->
 				<a href="index.php">
    				<input type="button" value="Return to Userpage" />
 				</a>

@@ -9,9 +9,15 @@ header("Location:index.php");
 	<body>
 		<?php
 		include("PHPconnectionDB.php");
+		
+		//If passed from the proper form
 		if(isset($_POST['updateperson'])){
+			
+			//Extract email sent from form
 			$email = $_POST['email'];
 			$conn=connect();
+			
+			//Pull the person that has identical email
 			$sqlp = '  	SELECT *
 							FROM persons p
 							WHERE p.email = \''.$email.'\'';
@@ -22,6 +28,9 @@ header("Location:index.php");
 				echo htmlentities($err['message']);
 		 		}		
 			$persons = oci_fetch_row($stidp);
+			
+			//Populate all fields with the person's current information
+			//And provide a button to change their information
 			echo '<h3>Personal Information change for '.$persons[1].' '.$persons[2].' </h3>';
 			echo '<form name = "changeperson" method = "post" action = "changeperson.php">';
 			echo '<input type="hidden" name = "fromDash" value="1" />';

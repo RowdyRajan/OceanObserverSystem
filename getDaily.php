@@ -1,23 +1,16 @@
 <?php
 include	("PHPconnectionDB.php");
 //Redirects login if not signed in
-if(isset($_COOKIE['Status']) && $_COOKIE['Status'] == "LoggedIn"){	 }
+if(isset($_COOKIE['Status']) && $_COOKIE['Status'] == "LoggedIn" && $_COOKIE["Role"] == 's'){	 }
 else{
 header("Location:index.php");		 
 } 
 ?>
 <html>
-	<?php
-		include	("PHPconnectionDB.php");	
-		if(isset($_COOKIE['Status']) && isset($_COOKIE['Person']) && $_COOKIE['Status'] == "LoggedIn" && $_COOKIE["Role"] == 's' ){	 }
-		else{
-			header("Location:index.php");		 
-		} 
-	?>
-
 	<div>
 		<?php
 			if(isset($_POST['getDaily'])){
+				//Aggregate data from fact table into rows based on year, quarter, month, and week (will provide at most 7 days)
 				$conn= connect();		   
 				$sql = '	SELECT 	f.sensor_id, s.location, t.year, t.quarter, t.month, t.week, t.time_id , AVG(f.svalue), MIN(f.svalue), MAX(f.svalue)
 							FROM 		fact f, sensors s, time t, persons p, subscriptions u
@@ -97,7 +90,7 @@ header("Location:index.php");
 						<?php 
 	    				} ?>
 				</TABLE>
-
+				<!-- Button to return to the User page -->
 				<a href="index.php">
    				<input type="button" value="Return to Userpage" />
 				</a>

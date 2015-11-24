@@ -11,14 +11,18 @@ header("Location:index.php");
 		<?php
 			include("PHPconnectionDB.php");
 			if(isset($_POST['changepassword'])){
+				//Extract the username, and both passwords typed in
 				$username=$_COOKIE['Username'];	
 				$password1=$_POST['password1'];
 				$password2=$_POST['password2'];
+				
+				//If the user has entered two different passwords, abort and redirect to index
 				if(strcmp((string)$password1, (string)$password2) != 0){
 					header('Refresh: 3; url = index.php');
 					echo '<h2>New Passwords did not match, returning to user page...</h2>';
 				}
 				else {
+					//Update the user's password
 					$conn=connect();
 					$sql = '	UPDATE users
 								SET password = \''.$password1.'\'
@@ -31,6 +35,7 @@ header("Location:index.php");
 		 			}
 					$res = oci_commit($conn);
 					
+					//Delete cookies, send them back to login:
 		 			header('Refresh: 3; url = index.php');
 		 			setcookie("Status", "", time()-3600);
 					setcookie("Person", "", time()-3600);
