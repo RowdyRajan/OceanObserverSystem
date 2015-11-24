@@ -1,5 +1,4 @@
 <?php
-include	("PHPconnectionDB.php");
 //Redirects login if not signed in
 if(isset($_COOKIE['Status']) && $_COOKIE['Status'] == "LoggedIn" && $_COOKIE["Role"] == 's'){	 }
 else{
