@@ -16,6 +16,11 @@ header("Location:index.php");
 		#logout{
 			float:right;		
 		}
+		
+		#userManual{
+			float:right;		
+		}
+		
 		#divChangePassword{
 			display: None;
 		}
@@ -40,7 +45,8 @@ header("Location:index.php");
     <li><a href="#tabs-2">Search</a></li>
     <li><a href="#tabs-3">Data Analysis Report</a></li>
     <li><a href="#tabs-4">Account Settings</a></li>
- 	 <button id="logout">Log out</button>
+    <button id="logout">Log out</button>
+    <button id="userManual">User Manual</button>
   </ul>
   <div id="tabs-1">
    	Subscriptions:
@@ -228,6 +234,11 @@ header("Location:index.php");
 	//Logout button on click
 	$("#logout").click(function(){
 			window.location.href = "login.php?status=logout";
+  		});
+  		
+  	//user manual button on click
+	$("#userManual").click(function(){
+			window.location.href = "userManual.html";
   		});
   	
   	//Handing fade in and outs for forms with button clicks

@@ -17,6 +17,11 @@ header("Location:index.php");
 		#logout{
 			float:right;		
 		}	
+		
+		#userManual{
+			float:right;		
+		}
+		
 		#divUploadImage{
 			display: None;
 		}
@@ -49,6 +54,7 @@ header("Location:index.php");
     <li><a href="#tabs-1">Upload</a></li>
     <li><a href="#tabs-2">Account Settings</a></li>
     <button id="logout">Log out</button>
+    <button id="userManual">User Manual</button>
   </ul>
   <div id="tabs-1">
    	<h3 class="subheaders">Upload Data to the Server</h3>
@@ -140,6 +146,11 @@ header("Location:index.php");
 	//Logout button on click
 	$("#logout").click(function(){
 			window.location.href = "login.php?status=logout";
+  		});
+  	
+  	//user manual button on click
+	$("#userManual").click(function(){
+			window.location.href = "userManual.html";
   		});
 		
 	//Handling Upload

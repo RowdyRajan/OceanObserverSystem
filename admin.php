@@ -8,7 +8,7 @@ header("Location:index.php");
 } 
 ?>
 <head>
-	//Establishes admin dashboard buttons, divs and tabs 
+	
 	<title>Admin Dashboard </title>
 	<script type="text/javascript" src="libraries/jquery-ui/external/jquery/jquery.js"></script>
 	<script type="text/javascript" src="libraries/jquery-ui/jquery-ui.js"></script>
@@ -24,6 +24,10 @@ header("Location:index.php");
 		}
 		
 		#logout{
+			float:right;		
+		}
+		
+		#userManual{
 			float:right;		
 		}
 		
@@ -87,6 +91,7 @@ header("Location:index.php");
     <li><a href="#tabs-2">User Management</a></li>
     <li><a href="#tabs-3">Account Settings</a></li>
     <button id="logout">Log out</button>
+    <button id="userManual">User Manual</button>
   </ul>
   
   <!-- Sensor Management tab -->
@@ -349,7 +354,12 @@ header("Location:index.php");
 	$("#logout").click(function(){
 			window.location.href = "login.php?status=logout";
   		});
-  	//Handing the add users
+  		
+  	//Logout button on click
+	$("#userManual").click(function(){
+			window.location.href = "userManual.html";
+  		});
+  	
   	
   	//Code for fading in and out forms based on button clicks
   	var newUserShowing = false;
